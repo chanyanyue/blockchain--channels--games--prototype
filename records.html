@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>链上五子棋 · 对局记录</title>
+<script src="https://modao.cc/agent-py/static/source/js/tailwindcss.js"></script>
+<script src="https://modao.cc/agent-py/static/source/js/iconify-icon.min.js"></script>
+<script src="https://modao.cc/agent-py/static/source/js/echarts.min.js"></script>
+</head>
+<body class="min-h-screen bg-[#070c16] text-slate-200 antialiased">
+<header class="sticky top-0 z-40 border-b border-white/[0.08] bg-[#070c16]/90 backdrop-blur">
+<div class="mx-auto flex h-16 max-w-[1200px] items-center justify-between gap-6 px-6">
+<a class="flex items-center gap-3" href="home.html">
+<span class="grid h-9 w-9 place-items-center rounded-xl bg-emerald-500/15 ring-1 ring-emerald-400/30">
+<iconify-icon class="text-xl text-emerald-400" icon="tabler:grid-dots"></iconify-icon>
+</span>
+<span class="leading-tight">
+<span class="block text-[15px] font-semibold text-white">链上五子棋</span>
+<span class="block text-[10px] font-medium tracking-[0.22em] text-slate-500">CHAIN GOMOKU</span>
+</span>
+</a>
+<nav class="hidden items-center gap-1 md:flex">
+<a class="rounded-lg px-4 py-2 text-sm text-slate-400 transition hover:bg-white/[0.06] hover:text-white" href="home.html">首页</a>
+<a class="rounded-lg bg-emerald-500/15 px-4 py-2 text-sm font-medium text-emerald-300 ring-1 ring-emerald-400/30" href="records.html">对局记录</a>
+<button class="rounded-lg px-4 py-2 text-sm text-slate-400 transition hover:bg-white/[0.06] hover:text-white" data-open-rules="1" type="button">游戏规则</button>
+</nav>
+<div class="hidden items-center gap-2 rounded-full border border-white/[0.08] bg-white/[0.03] px-3 py-1.5 text-xs text-slate-400 lg:flex">
+<span class="h-1.5 w-1.5 rounded-full bg-emerald-400"></span>
+        账本同步中 · 高度 #8,241,776
+      </div>
+</div>
+</header>
+<main class="mx-auto max-w-[1200px] px-6 py-8">
+<div class="flex flex-wrap items-end justify-between gap-4">
+<div>
+<p class="text-xs font-medium tracking-[0.2em] text-emerald-400">MATCH RECORDS</p>
+<h1 class="mt-2 text-[26px] font-bold text-white">对局记录</h1>
+<p class="mt-2 max-w-[680px] text-[14px] leading-relaxed text-slate-400">
+          这里汇总已完成的游戏对局及其链上存证信息。每局棋对应一条对局记录，包含对局结果、手数、时间和存证摘要，方便玩家回顾与核验。
+        </p>
+</div>
+<a class="inline-flex items-center gap-2 rounded-xl bg-emerald-500 px-5 py-2.5 text-sm font-semibold text-[#04140d] transition hover:bg-emerald-400" href="game.html">
+<iconify-icon class="text-base" icon="tabler:player-play"></iconify-icon>
+        开始新对局
+      </a>
+</div>
+<div class="mt-6 hidden items-start gap-3 rounded-2xl border border-emerald-400/25 bg-emerald-500/[0.07] px-5 py-4" id="liveNotice">
+<iconify-icon class="mt-0.5 text-lg text-emerald-300" icon="tabler:certificate"></iconify-icon>
+<p class="text-[13px] leading-relaxed text-slate-300" id="liveText">
+        已定位到刚完成结算的对局，对应记录已在下方高亮显示。
+      </p>
+</div>
+<section class="mt-6 rounded-2xl border border-white/[0.08] bg-[#0b1424] p-6">
+<div class="flex flex-wrap items-center justify-between gap-4">
+<h2 class="flex items-center gap-2 text-[15px] font-semibold text-white">
+<iconify-icon class="text-lg text-emerald-400" icon="tabler:list-details"></iconify-icon>
+          对局记录列表
+        </h2>
+<div class="flex flex-wrap items-center gap-2" id="filterBar">
+<button class="filter-btn rounded-lg bg-emerald-500/15 px-3.5 py-1.5 text-[12.5px] font-medium text-emerald-300 ring-1 ring-emerald-400/30 transition" data-filter="all" type="button">全部</button>
+<button class="filter-btn rounded-lg border border-white/[0.1] px-3.5 py-1.5 text-[12.5px] text-slate-400 transition hover:text-white" data-filter="win1" type="button">青方胜</button>
+<button class="filter-btn rounded-lg border border-white/[0.1] px-3.5 py-1.5 text-[12.5px] text-slate-400 transition hover:text-white" data-filter="win2" type="button">金方胜</button>
+<button class="filter-btn rounded-lg border border-white/[0.1] px-3.5 py-1.5 text-[12.5px] text-slate-400 transition hover:text-white" data-filter="draw" type="button">平局</button>
+</div>
+</div>
+<div class="mt-5 overflow-x-auto [scrollbar-width:none] [&amp;::-webkit-scrollbar]:hidden">
+<table class="w-full min-w-[900px] text-left text-[13px]">
+<thead class="border-b border-white/[0.08] text-[11.5px] text-slate-400">
+<tr>
+<th class="px-3 py-3 font-medium">存证哈希</th>
+<th class="px-3 py-3 font-medium">区块高度</th>
+<th class="px-3 py-3 font-medium">对局结果</th>
+<th class="px-3 py-3 text-right font-medium">手数</th>
+<th class="px-3 py-3 text-right font-medium">链上存证</th>
+<th class="px-3 py-3 font-medium">摘要哈希</th>
+<th class="px-3 py-3 font-medium">状态</th>
+<th class="px-3 py-3 font-medium">时间</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-white/[0.06]" id="recordBody"></tbody>
+</table>
+</div>
+<div class="mt-4 flex flex-wrap items-center justify-between gap-3 border-t border-white/[0.06] pt-4 text-[12px] text-slate-500">
+<p>显示最近 12 条记录，账本共 126 笔结算存证，均已完成链上确认。</p>
+<button class="inline-flex items-center gap-1.5 rounded-lg border border-white/[0.1] bg-white/[0.03] px-3.5 py-2 text-[12.5px] text-slate-300 transition hover:bg-white/[0.08]" id="loadMore" type="button">
+<iconify-icon class="text-sm" icon="tabler:plus"></iconify-icon>
+          加载更多历史记录
+        </button>
+</div>
+</section>
+<section class="mt-6 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+<div class="rounded-2xl border border-white/[0.08] bg-[#0b1424] p-5">
+<div class="flex items-center justify-between">
+<p class="text-[11.5px] text-slate-500">已完成对局</p>
+<iconify-icon class="text-lg text-emerald-400" icon="tabler:receipt-2"></iconify-icon>
+</div>
+<p class="mt-3 font-mono text-[28px] font-semibold text-white">126</p>
+<p class="mt-1 text-[11.5px] text-slate-500">共 126 局已完成对局</p>
+</div>
+<div class="rounded-2xl border border-white/[0.08] bg-[#0b1424] p-5">
+<div class="flex items-center justify-between">
+<p class="text-[11.5px] text-slate-500">链下落子事件</p>
+<iconify-icon class="text-lg text-slate-400" icon="tabler:cpu"></iconify-icon>
+</div>
+<p class="mt-3 font-mono text-[28px] font-semibold text-white">5,394</p>
+<p class="mt-1 text-[11.5px] text-slate-500">全部在客户端本地完成</p>
+</div>
+<div class="rounded-2xl border border-white/[0.08] bg-[#0b1424] p-5">
+<div class="flex items-center justify-between">
+<p class="text-[11.5px] text-slate-500">链上压缩比</p>
+<iconify-icon class="text-lg text-emerald-400" icon="tabler:arrows-shrink"></iconify-icon>
+</div>
+<p class="mt-3 font-mono text-[28px] font-semibold text-emerald-400">42.8 : 1</p>
+<p class="mt-1 text-[11.5px] text-slate-500">平均每局 42.8 手压缩为 1 笔</p>
+</div>
+<div class="rounded-2xl border border-white/[0.08] bg-[#0b1424] p-5">
+<div class="flex items-center justify-between">
+<p class="text-[11.5px] text-slate-500">预计节省链上事务</p>
+<iconify-icon class="text-lg text-amber-400" icon="tabler:trending-down"></iconify-icon>
+</div>
+<p class="mt-3 font-mono text-[28px] font-semibold text-white">5,268</p>
+<p class="mt-1 text-[11.5px] text-slate-500">相比逐手上链方案</p>
+</div>
+</section>
+<section class="mt-6 grid gap-6 lg:grid-cols-[1.25fr_1fr]">
+<div class="rounded-2xl border border-white/[0.08] bg-[#0b1424] p-6">
+<div class="flex flex-wrap items-center justify-between gap-3">
+<div>
+<h2 class="flex items-center gap-2 text-[15px] font-semibold text-white">
+<iconify-icon class="text-lg text-emerald-400" icon="tabler:chart-line"></iconify-icon>
+              链上存证量对比（近 12 局）
+            </h2>
+<p class="mt-1 text-[12px] text-slate-500">单位：链上存证次数 · 逐手存证方案 vs 本原型方案</p>
+</div>
+<div class="flex items-center gap-4 text-[11.5px] text-slate-400">
+<span class="flex items-center gap-2"><span class="h-2.5 w-2.5 rounded-sm bg-rose-400/70"></span>逐手上链</span>
+<span class="flex items-center gap-2"><span class="h-2.5 w-2.5 rounded-sm bg-emerald-400"></span>本原型</span>
+</div>
+</div>
+<div class="mt-4 h-[300px] w-full" id="txChart"></div>
+</div>
+<div class="rounded-2xl border border-white/[0.08] bg-[#0b1424] p-6">
+<h2 class="flex items-center gap-2 text-[15px] font-semibold text-white">
+<iconify-icon class="text-lg text-emerald-400" icon="tabler:gauge"></iconify-icon>
+          方案负载构成
+        </h2>
+<p class="mt-1 text-[12px] text-slate-500">单位：事务次数 · 本原型方案下链上占比仅 2.3%</p>
+<div class="mt-4 h-[300px] w-full" id="mixChart"></div>
+</div>
+</section>
+
+<section class="mt-6 grid gap-6 lg:grid-cols-2">
+<div class="rounded-2xl border border-white/[0.08] bg-[#0b1424] p-6">
+<h2 class="flex items-center gap-2 text-[15px] font-semibold text-white">
+<iconify-icon class="text-lg text-emerald-400" icon="tabler:shield-check"></iconify-icon>
+          数据可信性验证
+        </h2>
+<p class="mt-1 text-[12.5px] leading-relaxed text-slate-400">
+          任意一局都可按下述三项独立复核。校验依赖链上哈希，无需信任服务端。
+        </p>
+<div class="mt-5 space-y-3">
+<div class="flex items-start gap-3 rounded-xl border border-white/[0.06] bg-[#070c16] p-4">
+<iconify-icon class="mt-0.5 text-base text-emerald-400" icon="tabler:circle-check"></iconify-icon>
+<div>
+<p class="text-[13px] font-medium text-slate-200">摘要一致性</p>
+<p class="mt-1 text-[12px] leading-relaxed text-slate-400">本地重算落子序列的摘要哈希，与链上记录的 digest 完全一致（示例：0x4d9ac7e1…a3c60b81）。</p>
+</div>
+</div>
+<div class="flex items-start gap-3 rounded-xl border border-white/[0.06] bg-[#070c16] p-4">
+<iconify-icon class="mt-0.5 text-base text-emerald-400" icon="tabler:circle-check"></iconify-icon>
+<div>
+<p class="text-[13px] font-medium text-slate-200">双方签名有效性</p>
+<p class="mt-1 text-[12px] leading-relaxed text-slate-400">结算存证携带双方签名，验证通过即证明双方对该终局结果达成一致，不存在单方篡改。</p>
+</div>
+</div>
+<div class="flex items-start gap-3 rounded-xl border border-white/[0.06] bg-[#070c16] p-4">
+<iconify-icon class="mt-0.5 text-base text-emerald-400" icon="tabler:circle-check"></iconify-icon>
+<div>
+<p class="text-[13px] font-medium text-slate-200">积分账本核对</p>
+<p class="mt-1 text-[12px] leading-relaxed text-slate-400">按时间顺序累计各局积分变动，即可还原任意玩家的积分余额，与链上状态完全吻合。</p>
+</div>
+</div>
+</div>
+</div>
+<div class="rounded-2xl border border-white/[0.08] bg-[#0b1424] p-6">
+<h2 class="flex items-center gap-2 text-[15px] font-semibold text-white">
+<iconify-icon class="text-lg text-emerald-400" icon="tabler:box-multiple"></iconify-icon>
+          批量结算路线（进阶）
+        </h2>
+<p class="mt-1 text-[12.5px] leading-relaxed text-slate-400">
+          当同时在线玩家增多时，可把多局结算聚合成一棵 Merkle 树，仅提交根哈希，链上事务量进一步与对局数脱钩。
+        </p>
+<div class="mt-5 space-y-2.5">
+<div class="flex items-center justify-between rounded-xl border border-white/[0.06] bg-[#070c16] px-4 py-3">
+<span class="font-mono text-[12px] text-slate-300">Leaf-01 · digest(局 126)</span>
+<span class="text-[11.5px] text-emerald-300">已纳入</span>
+</div>
+<div class="flex items-center justify-between rounded-xl border border-white/[0.06] bg-[#070c16] px-4 py-3">
+<span class="font-mono text-[12px] text-slate-300">Leaf-02 · digest(局 127)</span>
+<span class="text-[11.5px] text-emerald-300">已纳入</span>
+</div>
+<div class="flex items-center justify-between rounded-xl border border-white/[0.06] bg-[#070c16] px-4 py-3">
+<span class="font-mono text-[12px] text-slate-300">Leaf-03 · digest(局 128)</span>
+<span class="text-[11.5px] text-slate-500">待确认</span>
+</div>
+<div class="rounded-xl border border-emerald-400/25 bg-emerald-500/[0.07] px-4 py-3">
+<p class="text-[11px] text-slate-400">Merkle Root（单笔上链）</p>
+<p class="mt-1 break-all font-mono text-[11.5px] text-emerald-200">0xb3e01c6da47f9218507ce4b36a0d5f8127ce93ab4601d7f25c8e0a93b7146d28</p>
+</div>
+<p class="text-[11.5px] leading-relaxed text-slate-500">48 局批量结算可由 48 笔压缩为 1 笔，链上开销进一步下降约 98%。</p>
+</div>
+</div>
+</section>
+</main>
+<footer class="border-t border-white/[0.06]">
+<div class="mx-auto flex max-w-[1200px] flex-col gap-3 px-6 py-8 text-xs text-slate-500 sm:flex-row sm:items-center sm:justify-between">
+<p>© 2026 链上五子棋原型演示 · 区块链数据为模拟数据</p>
+<div class="flex items-center gap-5">
+<a class="transition hover:text-slate-300" href="home.html">返回首页</a>
+<a class="transition hover:text-slate-300" href="game.html">开始对局</a>
+<a class="transition hover:text-slate-300" href="settlement.html">结算详情</a>
+</div>
+</div>
+</footer>
+<script>
+    var params = new URLSearchParams(window.location.search);
+    var liveDigest = params.get("digest") || "";
+    var liveTx = params.get("tx") || "";
+
+    var results = ["win1", "win2", "win2", "win1", "draw", "win1", "win2", "win1", "win1", "win2", "draw", "win1"];
+    var moveCounts = [31, 46, 52, 27, 78, 38, 44, 22, 58, 49, 225, 35];
+    var blocks = ["8,241,776", "8,241,612", "8,241,488", "8,241,301", "8,241,187", "8,240,942", "8,240,806", "8,240,651", "8,240,470", "8,240,318", "8,240,129", "8,239,977"];
+
+    function hashHex(str) {
+      var h1 = 0x811c9dc5;
+      var h2 = 0x1000193;
+      for (var k = 0; k < str.length; k++) {
+        var ch = str.charCodeAt(k);
+        h1 = Math.imul(h1 ^ ch, 16777619) >>> 0;
+        h2 = Math.imul(h2 ^ (ch + k * 7), 2246822519) >>> 0;
+      }
+      return h1.toString(16).padStart(8, "0") + h2.toString(16).padStart(8, "0");
+    }
+
+    function buildRecords() {
+      var rows = [];
+      for (var i = 0; i < 12; i++) {
+        var seed = "block" + blocks[i] + "|" + results[i] + "|" + moveCounts[i];
+        var tx = "0x" + hashHex("tx" + seed) + hashHex("mid" + seed) + hashHex("end" + seed);
+        var dg = "0x" + hashHex("dg" + seed) + hashHex("dg2" + seed) + "a1c94f" + hashHex("dg3" + seed).slice(0, 8);
+        rows.push({
+          tx: tx,
+          block: blocks[i],
+          result: results[i],
+          moves: moveCounts[i],
+          digest: dg,
+          time: "2026-09-28 " + String(15 - i).padStart(2, "0") + ":" + String((i * 7 + 12) % 60).padStart(2, "0"),
+          live: liveDigest !== "" && liveDigest.slice(0, 20) === dg.slice(0, 20)
+        });
+      }
+      if (liveTx) {
+        rows[0].tx = liveTx;
+        rows[0].live = true;
+      }
+      return rows;
+    }
+
+    var allRows = buildRecords();
+
+    function resultMeta(r) {
+      if (r === "win1") return { label: "青方胜", cls: "bg-emerald-500/15 text-emerald-300 ring-emerald-400/25" };
+      if (r === "win2") return { label: "金方胜", cls: "bg-amber-500/15 text-amber-300 ring-amber-400/25" };
+      return { label: "平局", cls: "bg-slate-500/15 text-slate-300 ring-slate-400/25" };
+    }
+
+    var currentFilter = "all";
+
+    function renderRecords() {
+      var tbody = document.getElementById("recordBody");
+      tbody.innerHTML = "";
+      var shown = 0;
+      for (var i = 0; i < allRows.length; i++) {
+        var r = allRows[i];
+        if (currentFilter !== "all" && r.result !== currentFilter) continue;
+        shown += 1;
+        var meta = resultMeta(r.result);
+        var tr = document.createElement("tr");
+        tr.className = r.live ? "bg-emerald-500/[0.08]" : "transition hover:bg-white/[0.03]";
+
+        var tdTx = document.createElement("td");
+        tdTx.className = "px-3 py-3 font-mono text-[11.5px] text-slate-300";
+        tdTx.textContent = r.tx.slice(0, 14) + "…" + r.tx.slice(-6);
+
+        var tdBlock = document.createElement("td");
+        tdBlock.className = "px-3 py-3 font-mono text-[12px] text-slate-200";
+        tdBlock.textContent = "#" + r.block;
+
+        var tdRes = document.createElement("td");
+        tdRes.className = "px-3 py-3";
+        var badge = document.createElement("span");
+        badge.className = "rounded-full px-2.5 py-1 text-[11px] ring-1 " + meta.cls;
+        badge.textContent = meta.label;
+        tdRes.appendChild(badge);
+
+        var tdMoves = document.createElement("td");
+        tdMoves.className = "px-3 py-3 text-right font-mono text-[12px] text-slate-300";
+        tdMoves.textContent = String(r.moves);
+
+        var tdTxCount = document.createElement("td");
+        tdTxCount.className = "px-3 py-3 text-right font-mono text-[12px] text-amber-300";
+        tdTxCount.textContent = "1 笔";
+
+        var tdDigest = document.createElement("td");
+        tdDigest.className = "px-3 py-3 font-mono text-[11.5px] text-slate-400";
+        tdDigest.textContent = r.digest.slice(0, 12) + "…" + r.digest.slice(-6);
+
+        var tdState = document.createElement("td");
+        tdState.className = "px-3 py-3";
+        var st = document.createElement("span");
+        st.className = r.live
+          ? "inline-flex items-center gap-1.5 text-[11.5px] font-medium text-emerald-300"
+          : "inline-flex items-center gap-1.5 text-[11.5px] text-slate-400";
+        st.innerHTML = '<span class="h-1.5 w-1.5 rounded-full ' + (r.live ? "bg-emerald-400" : "bg-slate-500") + '"></span>' + (r.live ? "本次提交 · 已确认" : "已确认");
+        tdState.appendChild(st);
+
+        var tdTime = document.createElement("td");
+        tdTime.className = "px-3 py-3 font-mono text-[11.5px] text-slate-500";
+        tdTime.textContent = r.time;
+
+        tr.appendChild(tdTx);
+        tr.appendChild(tdBlock);
+        tr.appendChild(tdRes);
+        tr.appendChild(tdMoves);
+        tr.appendChild(tdTxCount);
+        tr.appendChild(tdDigest);
+        tr.appendChild(tdState);
+        tr.appendChild(tdTime);
+        tbody.appendChild(tr);
+      }
+      if (shown === 0) {
+        var tr = document.createElement("tr");
+        var td = document.createElement("td");
+        td.colSpan = 8;
+        td.className = "px-3 py-10 text-center text-[13px] text-slate-500";
+        td.textContent = "该筛选条件下暂无结算记录，可切换到「全部」查看。";
+        tr.appendChild(td);
+        tbody.appendChild(tr);
+      }
+    }
+
+    function bindFilters() {
+      var btns = document.querySelectorAll(".filter-btn");
+      for (var i = 0; i < btns.length; i++) {
+        btns[i].addEventListener("click", function () {
+          var target = this.getAttribute("data-filter");
+          currentFilter = target;
+          for (var j = 0; j < btns.length; j++) {
+            btns[j].className = "filter-btn rounded-lg border border-white/[0.1] px-3.5 py-1.5 text-[12.5px] text-slate-400 transition hover:text-white";
+          }
+          this.className = "filter-btn rounded-lg bg-emerald-500/15 px-3.5 py-1.5 text-[12.5px] font-medium text-emerald-300 ring-1 ring-emerald-400/30 transition";
+          renderRecords();
+        });
+      }
+    }
+
+    function initCharts() {
+      var txEl = document.getElementById("txChart");
+      var txChart = echarts.init(txEl);
+      var labels = [];
+      for (var i = 1; i <= 12; i++) labels.push("第 " + i + " 局");
+      txChart.setOption({
+        grid: { left: 46, right: 18, top: 24, bottom: 34 },
+        tooltip: {
+          trigger: "axis",
+          backgroundColor: "#0b1424",
+          borderColor: "rgba(148,163,184,0.25)",
+          textStyle: { color: "#e2e8f0", fontSize: 12 },
+          axisPointer: { type: "shadow" },
+          valueFormatter: function (v) { return v + " 笔存证"; }
+        },
+        legend: { show: false },
+        xAxis: {
+          type: "category",
+          data: labels,
+          axisLine: { lineStyle: { color: "rgba(148,163,184,0.25)" } },
+          axisLabel: { color: "#94a3b8", fontSize: 11 }
+        },
+        yAxis: {
+          type: "value",
+          name: "存证次数",
+          nameTextStyle: { color: "#94a3b8", fontSize: 11 },
+          axisLine: { show: false },
+          splitLine: { lineStyle: { color: "rgba(148,163,184,0.12)" } },
+          axisLabel: { color: "#94a3b8", fontSize: 11 }
+        },
+        series: [
+          {
+            name: "逐手上链",
+            type: "bar",
+            data: moveCounts,
+            barWidth: 12,
+            itemStyle: { color: "rgba(251,113,133,0.55)", borderRadius: [3, 3, 0, 0] }
+          },
+          {
+            name: "本原型方案",
+            type: "bar",
+            data: [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+            barWidth: 12,
+            itemStyle: { color: "#34d399", borderRadius: [3, 3, 0, 0] }
+          }
+        ]
+      });
+
+      var mixEl = document.getElementById("mixChart");
+      var mixChart = echarts.init(mixEl);
+      mixChart.setOption({
+        tooltip: {
+          trigger: "item",
+          backgroundColor: "#0b1424",
+          borderColor: "rgba(148,163,184,0.25)",
+          textStyle: { color: "#e2e8f0", fontSize: 12 },
+          formatter: "{b}：{c} 次（{d}%）"
+        },
+        legend: {
+          bottom: 0,
+          icon: "circle",
+          textStyle: { color: "#94a3b8", fontSize: 11 }
+        },
+        series: [
+          {
+            name: "负载构成",
+            type: "pie",
+            radius: ["46%", "72%"],
+            center: ["50%", "45%"],
+            avoidLabelOverlap: true,
+            itemStyle: { borderColor: "#0b1424", borderWidth: 3 },
+            label: { color: "#cbd5e1", fontSize: 11, formatter: "{b}\n{d}%" },
+            labelLine: { lineStyle: { color: "rgba(148,163,184,0.4)" } },
+            data: [
+              { value: 5394, name: "链下落子（本地）", itemStyle: { color: "#34d399" } },
+              { value: 126, name: "链上存证", itemStyle: { color: "#fbbf24" } }
+            ]
+          }
+        ]
+      });
+
+      window.addEventListener("resize", function () {
+        txChart.resize();
+        mixChart.resize();
+      });
+    }
+
+    document.getElementById("loadMore").addEventListener("click", function () {
+      this.innerHTML = '<iconify-icon icon="tabler:loader-2" class="animate-spin text-sm"></iconify-icon> 同步中…';
+      var btn = this;
+      setTimeout(function () {
+        btn.innerHTML = '<iconify-icon icon="tabler:check" class="text-sm text-emerald-300"></iconify-icon> 已同步至最新区块';
+      }, 900);
+    });
+
+    if (liveDigest || liveTx) {
+      var notice = document.getElementById("liveNotice");
+      notice.classList.remove("hidden");
+      document.getElementById("liveText").textContent =
+        "已定位到刚完成结算的对局 " + (liveTx ? liveTx.slice(0, 18) + "…" : "") +
+        "，对应记录已在列表顶部高亮显示，摘要哈希与提交内容一致。";
+    }
+
+    renderRecords();
+    bindFilters();
+    initCharts();
+  </script>
+<!-- GAME_RULES_MODAL_START -->
+<div aria-labelledby="gameRulesTitle" aria-modal="true" class="fixed inset-0 z-[100] hidden" id="gameRulesModal" role="dialog">
+  <div class="absolute inset-0 bg-black/70 backdrop-blur-sm" data-close-rules="1"></div>
+  <div class="relative mx-auto flex min-h-screen max-w-[760px] items-center justify-center px-4 py-8">
+    <section class="relative max-h-[88vh] w-full overflow-hidden rounded-3xl border border-white/[0.10] bg-[#0b1424] shadow-2xl shadow-black/50 ring-1 ring-emerald-400/10">
+      <div class="flex items-center justify-between border-b border-white/[0.08] px-6 py-5">
+        <div>
+          <div class="flex items-center gap-2 text-emerald-300">
+            <iconify-icon class="text-lg" icon="tabler:book-2"></iconify-icon>
+            <span class="text-xs font-medium tracking-wide">GAME RULES</span>
+          </div>
+          <h2 class="mt-1 text-xl font-semibold text-white" id="gameRulesTitle">游戏规则</h2>
+        </div>
+        <button aria-label="关闭游戏规则" class="grid h-9 w-9 place-items-center rounded-xl text-slate-400 transition hover:bg-white/[0.06] hover:text-white" data-close-rules="1" type="button">
+          <iconify-icon class="text-lg" icon="tabler:x"></iconify-icon>
+        </button>
+      </div>
+      <div class="max-h-[calc(88vh-82px)] overflow-y-auto px-6 py-6">
+        <div class="grid gap-4 md:grid-cols-2">
+          <div class="rounded-2xl border border-white/[0.08] bg-white/[0.025] p-5">
+            <div class="flex items-center gap-3">
+              <span class="grid h-9 w-9 place-items-center rounded-xl bg-emerald-500/10 text-emerald-300 ring-1 ring-emerald-400/20"><iconify-icon icon="tabler:click"></iconify-icon></span>
+              <h3 class="font-semibold text-white">五子棋下法</h3>
+            </div>
+            <ol class="mt-4 space-y-3 text-[13px] leading-relaxed text-slate-300">
+              <li><span class="mr-2 font-mono text-emerald-300">01</span>双方在线匹配后进入同一盘对局，青方先手，金方后手。</li>
+              <li><span class="mr-2 font-mono text-emerald-300">02</span>轮到自己时，点击棋盘交叉点落子；每次落子占用 1 手。</li>
+              <li><span class="mr-2 font-mono text-emerald-300">03</span>棋子落下后不能移动；双方依次落子，直到产生胜负或和棋。</li>
+              <li><span class="mr-2 font-mono text-emerald-300">04</span>任意一方横、竖或斜向连续形成 5 子，即刻获胜，对局结束。</li>
+              <li><span class="mr-2 font-mono text-emerald-300">05</span>棋盘全部落满仍没有五连，则判定为平局。</li>
+            </ol>
+          </div>
+          <div class="rounded-2xl border border-white/[0.08] bg-white/[0.025] p-5">
+            <div class="flex items-center gap-3">
+              <span class="grid h-9 w-9 place-items-center rounded-xl bg-amber-500/10 text-amber-300 ring-1 ring-amber-400/20"><iconify-icon icon="tabler:coins"></iconify-icon></span>
+              <h3 class="font-semibold text-white">分数结算</h3>
+            </div>
+            <div class="mt-4 space-y-3 text-[13px] leading-relaxed">
+              <div class="flex items-center justify-between rounded-xl bg-white/[0.03] px-4 py-3"><span class="text-slate-300">胜方</span><span class="font-mono font-semibold text-emerald-300">+100 基础分</span></div>
+              <div class="flex items-center justify-between rounded-xl bg-white/[0.03] px-4 py-3"><span class="text-slate-300">手数效率</span><span class="font-mono font-semibold text-amber-300">+5 ～ +30</span></div>
+              <div class="flex items-center justify-between rounded-xl bg-white/[0.03] px-4 py-3"><span class="text-slate-300">负方</span><span class="font-mono font-semibold text-rose-300">-40</span></div>
+              <div class="flex items-center justify-between rounded-xl bg-white/[0.03] px-4 py-3"><span class="text-slate-300">平局双方</span><span class="font-mono font-semibold text-sky-300">各 +20</span></div>
+            </div>
+            <p class="mt-4 text-[12px] leading-relaxed text-slate-500">胜方总得分 = 100 基础分 + 手数效率加成。现有原型采用 +5～+30 的效率加成区间，手数越少，加成越高。</p>
+          </div>
+        </div>
+        <div class="mt-4 rounded-2xl border border-emerald-400/15 bg-emerald-500/[0.06] p-5">
+          <div class="flex items-start gap-3">
+            <iconify-icon class="mt-0.5 text-lg text-emerald-300" icon="tabler:shield-check"></iconify-icon>
+            <div>
+              <h3 class="font-semibold text-white">结算与链上存证</h3>
+              <p class="mt-1 text-[12.5px] leading-relaxed text-slate-400">对局在链下完成。终局后按上述规则计算双方积分，并生成本局结果摘要；每局只提交 1 笔链上结算存证，记录终局摘要、双方地址与积分结果。</p>
+            </div>
+          </div>
+        </div>
+        <p class="mt-4 text-center text-[11px] text-slate-500">提示：游戏规则可在对局过程中随时打开查看，不会离开当前对局页面。</p>
+      </div>
+    </section>
+  </div>
+</div>
+<!-- GAME_RULES_MODAL_END -->
+<script>
+(function(){
+  var modal = document.getElementById('gameRulesModal');
+  if (!modal) return;
+  function openRules(){ modal.classList.remove('hidden'); document.body.classList.add('overflow-hidden'); }
+  function closeRules(){ modal.classList.add('hidden'); document.body.classList.remove('overflow-hidden'); }
+  document.querySelectorAll('[data-open-rules]').forEach(function(btn){ btn.addEventListener('click', openRules); });
+  modal.querySelectorAll('[data-close-rules]').forEach(function(btn){ btn.addEventListener('click', closeRules); });
+  document.addEventListener('keydown', function(e){ if(e.key === 'Escape' && !modal.classList.contains('hidden')) closeRules(); });
+})();
+</script>
+
+</body>
+</html>

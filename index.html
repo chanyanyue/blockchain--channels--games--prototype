@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+
+<html class="scroll-smooth" lang="zh-CN">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>链上五子棋 · 首页</title>
+<script src="https://modao.cc/agent-py/static/source/js/tailwindcss.js"></script>
+<script src="https://modao.cc/agent-py/static/source/js/iconify-icon.min.js"></script>
+</head>
+<body class="min-h-screen bg-[#070c16] text-slate-200 antialiased">
+<header class="sticky top-0 z-40 border-b border-white/[0.08] bg-[#070c16]/90 backdrop-blur">
+<div class="mx-auto flex h-16 max-w-[1200px] items-center justify-between gap-6 px-6">
+<a class="flex items-center gap-3" href="home.html">
+<span class="grid h-9 w-9 place-items-center rounded-xl bg-emerald-500/15 ring-1 ring-emerald-400/30">
+<iconify-icon class="text-xl text-emerald-400" icon="tabler:grid-dots"></iconify-icon>
+</span>
+<span class="leading-tight">
+<span class="block text-[15px] font-semibold text-white">链上五子棋</span>
+<span class="block text-[10px] font-medium tracking-[0.22em] text-slate-500">CHAIN GOMOKU</span>
+</span>
+</a>
+<nav class="hidden items-center gap-1 md:flex">
+<a class="rounded-lg bg-emerald-500/15 px-4 py-2 text-sm font-medium text-emerald-300 ring-1 ring-emerald-400/30" href="home.html">首页</a>
+<a class="rounded-lg px-4 py-2 text-sm text-slate-400 transition hover:bg-white/[0.06] hover:text-white" href="records.html">对局记录</a>
+<button class="rounded-lg px-4 py-2 text-sm text-slate-400 transition hover:bg-white/[0.06] hover:text-white" data-open-rules="1" type="button">游戏规则</button>
+</nav>
+<div class="hidden items-center gap-2 rounded-full border border-white/[0.08] bg-white/[0.03] px-3 py-1.5 text-xs text-slate-400 lg:flex">
+<span class="h-1.5 w-1.5 rounded-full bg-emerald-400"></span>
+        模拟主网 · 高度 #8,241,776
+      </div>
+</div>
+</header>
+<section class="relative overflow-hidden border-b border-white/[0.06]">
+<div class="pointer-events-none absolute inset-0 opacity-[0.16]" style="background-image:linear-gradient(rgba(148,163,184,.35) 1px,transparent 1px),linear-gradient(90deg,rgba(148,163,184,.35) 1px,transparent 1px);background-size:58px 58px;"></div>
+<div class="pointer-events-none absolute -left-32 -top-40 h-[420px] w-[420px] rounded-full bg-emerald-500/10 blur-[130px]"></div>
+<div class="relative mx-auto grid max-w-[1200px] items-center gap-14 px-6 py-16 lg:grid-cols-[1.05fr_0.95fr] lg:py-20">
+<div>
+<span class="inline-flex items-center gap-2 rounded-full border border-emerald-400/25 bg-emerald-500/10 px-3.5 py-1.5 text-xs font-medium text-emerald-300">
+<iconify-icon class="text-sm" icon="tabler:link"></iconify-icon>
+          区块链 × 五子棋 · 可信结算原型
+        </span>
+<h1 class="mt-6 text-[40px] font-bold leading-[1.15] tracking-tight text-white lg:text-[46px]">
+          每一步都在本地，
+          <span class="text-emerald-400">每一局都上链留证</span>
+</h1>
+<p class="mt-5 max-w-[560px] text-[15px] leading-relaxed text-slate-400">
+          区块链擅长提供数据可信性，却受限于较低的事务处理能力（TPS）。因此本原型把高频的落子、胜负判定全部放在浏览器本地完成，
+          只在终局提交 <span class="font-medium text-slate-200">1 笔结算存证</span>，用最小的链上开销换取可验证的对局结果与积分账本。
+        </p>
+<div class="mt-8 flex flex-wrap items-center gap-3">
+<button class="inline-flex items-center gap-2 rounded-xl bg-emerald-500 px-6 py-3 text-sm font-semibold text-[#04140d] shadow-[0_18px_40px_-18px_rgba(16,185,129,0.9)] transition hover:bg-emerald-400" id="startMatchBtn" type="button">
+<iconify-icon class="text-base" icon="tabler:player-play"></iconify-icon>
+            开始对局
+          </button>
+<a class="inline-flex items-center gap-2 rounded-xl border border-white/[0.12] bg-white/[0.04] px-6 py-3 text-sm font-medium text-slate-200 transition hover:border-white/25 hover:bg-white/[0.08]" href="records.html">
+<iconify-icon class="text-base" icon="tabler:list-details"></iconify-icon>
+            查看对局记录
+          </a>
+</div>
+<dl class="mt-10 grid max-w-[520px] grid-cols-3 gap-4 border-t border-white/[0.08] pt-6">
+<div>
+<dt class="text-[11px] tracking-wide text-slate-500">棋盘规格</dt>
+<dd class="mt-1 text-lg font-semibold text-white">15 × 15</dd>
+</div>
+<div>
+<dt class="text-[11px] tracking-wide text-slate-500">每局链上存证</dt>
+<dd class="mt-1 text-lg font-semibold text-white">1 笔</dd>
+</div>
+<div>
+<dt class="text-[11px] tracking-wide text-slate-500">结算触发</dt>
+<dd class="mt-1 text-lg font-semibold text-white">终局一次</dd>
+</div>
+</dl>
+</div>
+<div class="rounded-2xl border border-white/[0.08] bg-[#0b1424] p-6 shadow-[0_30px_70px_-40px_rgba(16,185,129,0.55)]">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2 text-xs font-medium tracking-wide text-slate-400">
+<iconify-icon class="text-base text-emerald-400" icon="tabler:receipt"></iconify-icon>
+            链上结算凭证
+          </div>
+<span class="rounded-full bg-emerald-500/15 px-2.5 py-1 text-[11px] font-medium text-emerald-300 ring-1 ring-emerald-400/25">已确认</span>
+</div>
+<div class="mt-4 rounded-xl border border-white/[0.06] bg-[#070c16] px-4 py-3">
+<p class="text-[11px] text-slate-500">记录哈希</p>
+<p class="mt-1 break-all font-mono text-[12.5px] leading-relaxed text-slate-300">0x9c41f7a2b8e5d036a7148fb2ce5d9a30f418b2c7de6a09f31b5c8e2a47d60b93</p>
+</div>
+<div class="mt-3 grid grid-cols-3 gap-3 text-center">
+<div class="rounded-xl border border-white/[0.06] bg-white/[0.02] py-3">
+<p class="text-[10px] text-slate-500">区块高度</p>
+<p class="mt-1 font-mono text-[13px] text-slate-200">8241776</p>
+</div>
+<div class="rounded-xl border border-white/[0.06] bg-white/[0.02] py-3">
+<p class="text-[10px] text-slate-500">确认数</p>
+<p class="mt-1 font-mono text-[13px] text-slate-200">32</p>
+</div>
+<div class="rounded-xl border border-white/[0.06] bg-white/[0.02] py-3">
+<p class="text-[10px] text-slate-500">链上存证</p>
+<p class="mt-1 font-mono text-[13px] text-amber-300">1 笔</p>
+</div>
+</div>
+<div class="mt-5 space-y-4 rounded-xl border border-white/[0.06] bg-[#070c16] p-4">
+<p class="text-[11px] tracking-wide text-slate-500">本局负载对比</p>
+<div>
+<div class="flex items-center justify-between text-xs">
+<span class="text-slate-300">链下落子事件</span>
+<span class="font-mono text-slate-400">42 次</span>
+</div>
+<div class="mt-2 h-2 w-full overflow-hidden rounded-full bg-white/[0.06]">
+<div class="h-full w-full rounded-full bg-emerald-400"></div>
+</div>
+</div>
+<div>
+<div class="flex items-center justify-between text-xs">
+<span class="text-slate-300">链上结算存证</span>
+<span class="font-mono text-slate-400">1 笔</span>
+</div>
+<div class="mt-2 h-2 w-full overflow-hidden rounded-full bg-white/[0.06]">
+<div class="h-full w-[3%] rounded-full bg-amber-400"></div>
+</div>
+</div>
+<p class="border-t border-white/[0.06] pt-3 text-[11.5px] leading-relaxed text-slate-500">
+            落子与胜负判定全程离线完成，仅把终局摘要与积分变动写入链上，链上存证笔数被压缩约 42 倍。
+          </p>
+</div>
+</div>
+</div>
+</section>
+<section class="mx-auto max-w-[1200px] px-6 py-16">
+<div class="max-w-[720px]">
+<p class="text-xs font-medium tracking-[0.2em] text-emerald-400">WHY ON-CHAIN</p>
+<h2 class="mt-3 text-[28px] font-bold text-white">为什么对局结果需要上链</h2>
+<p class="mt-3 text-[15px] leading-relaxed text-slate-400">
+        积分是玩家最在意的资产。若结算仅由中心服务器完成，记录可以被静默修改、争议时也难以自证。
+        把终局结算结果写入区块链后，即可获得以下四项可信性支撑。
+      </p>
+</div>
+<div class="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+<div class="rounded-2xl border border-white/[0.08] bg-[#0b1424] p-6 transition hover:border-emerald-400/30">
+<span class="grid h-11 w-11 place-items-center rounded-xl bg-emerald-500/12 ring-1 ring-emerald-400/25">
+<iconify-icon class="text-xl text-emerald-400" icon="tabler:shield-check"></iconify-icon>
+</span>
+<h3 class="mt-5 text-base font-semibold text-white">不可篡改</h3>
+<p class="mt-2 text-[13.5px] leading-relaxed text-slate-400">积分变动一旦写入账本即形成不可回退的历史，任何一方都无法事后修改对局结论。</p>
+</div>
+<div class="rounded-2xl border border-white/[0.08] bg-[#0b1424] p-6 transition hover:border-emerald-400/30">
+<span class="grid h-11 w-11 place-items-center rounded-xl bg-emerald-500/12 ring-1 ring-emerald-400/25">
+<iconify-icon class="text-xl text-emerald-400" icon="tabler:history"></iconify-icon>
+</span>
+<h3 class="mt-5 text-base font-semibold text-white">全程可追溯</h3>
+<p class="mt-2 text-[13.5px] leading-relaxed text-slate-400">每局对局都能回溯到记录哈希、所在区块高度与打包时间戳，争议时可直接取证。</p>
+</div>
+<div class="rounded-2xl border border-white/[0.08] bg-[#0b1424] p-6 transition hover:border-emerald-400/30">
+<span class="grid h-11 w-11 place-items-center rounded-xl bg-emerald-500/12 ring-1 ring-emerald-400/25">
+<iconify-icon class="text-xl text-emerald-400" icon="tabler:signature"></iconify-icon>
+</span>
+<h3 class="mt-5 text-base font-semibold text-white">参与方归属明确</h3>
+<p class="mt-2 text-[13.5px] leading-relaxed text-slate-400">结算存证由双方地址签名，胜负结果与具体地址一一绑定，杜绝代打与冒领积分。</p>
+</div>
+<div class="rounded-2xl border border-white/[0.08] bg-[#0b1424] p-6 transition hover:border-emerald-400/30">
+<span class="grid h-11 w-11 place-items-center rounded-xl bg-emerald-500/12 ring-1 ring-emerald-400/25">
+<iconify-icon class="text-xl text-emerald-400" icon="tabler:users-group"></iconify-icon>
+</span>
+<h3 class="mt-5 text-base font-semibold text-white">共识确认</h3>
+<p class="mt-2 text-[13.5px] leading-relaxed text-slate-400">结算结果需经多节点共识确认后才计入最终积分，单一节点无法篡改账本状态。</p>
+</div>
+</div>
+</section>
+<section class="border-y border-white/[0.06] bg-[#080e1a]">
+<div class="mx-auto grid max-w-[1200px] gap-12 px-6 py-16 lg:grid-cols-[0.95fr_1.05fr]">
+<div>
+<p class="text-xs font-medium tracking-[0.2em] text-amber-400">LOW ON-CHAIN LOAD</p>
+<h2 class="mt-3 text-[28px] font-bold text-white">把链上负担压到每局一笔</h2>
+<p class="mt-3 text-[15px] leading-relaxed text-slate-400">
+          若每次落子都发一笔存证，一局 40 手就会占用 40 次链上存证，把本就紧张的 TPS 消耗在无争议价值的高频操作上。
+          本原型采用「链下高频、链上低频」的分层设计。
+        </p>
+<div class="mt-8 space-y-4">
+<div class="rounded-2xl border border-rose-400/20 bg-rose-500/[0.06] p-5">
+<div class="flex items-center justify-between">
+<span class="text-sm font-medium text-rose-300">传统方案 · 每手一存证</span>
+<span class="font-mono text-xs text-rose-300/80">40 笔 / 局</span>
+</div>
+<div class="mt-3 flex gap-1">
+<span class="h-2 flex-1 rounded-full bg-rose-400/70"></span>
+<span class="h-2 flex-1 rounded-full bg-rose-400/70"></span>
+<span class="h-2 flex-1 rounded-full bg-rose-400/70"></span>
+<span class="h-2 flex-1 rounded-full bg-rose-400/70"></span>
+<span class="h-2 flex-1 rounded-full bg-rose-400/70"></span>
+<span class="h-2 flex-1 rounded-full bg-rose-400/70"></span>
+<span class="h-2 flex-1 rounded-full bg-rose-400/70"></span>
+<span class="h-2 flex-1 rounded-full bg-rose-400/70"></span>
+</div>
+<p class="mt-3 text-[12.5px] text-slate-400">链上存证笔数与对局步数线性相关，TPS 压力随玩家数量迅速放大。</p>
+</div>
+<div class="rounded-2xl border border-emerald-400/25 bg-emerald-500/[0.07] p-5">
+<div class="flex items-center justify-between">
+<span class="text-sm font-medium text-emerald-300">本原型 · 终局单笔结算</span>
+<span class="font-mono text-xs text-emerald-300/80">1 笔 / 局</span>
+</div>
+<div class="mt-3 flex gap-1">
+<span class="h-2 flex-1 rounded-full bg-emerald-400/25"></span>
+<span class="h-2 flex-1 rounded-full bg-emerald-400/25"></span>
+<span class="h-2 flex-1 rounded-full bg-emerald-400/25"></span>
+<span class="h-2 flex-1 rounded-full bg-emerald-400/25"></span>
+<span class="h-2 flex-1 rounded-full bg-emerald-400/25"></span>
+<span class="h-2 flex-1 rounded-full bg-emerald-400/25"></span>
+<span class="h-2 flex-1 rounded-full bg-emerald-400/25"></span>
+<span class="h-2 flex-1 rounded-full bg-amber-400"></span>
+</div>
+<p class="mt-3 text-[12.5px] text-slate-400">落子全部留在链下，仅终局结算的 1 笔存证上链，存证笔数与步数彻底解耦。</p>
+</div>
+</div>
+</div>
+<div class="space-y-4">
+<div class="flex gap-4 rounded-2xl border border-white/[0.08] bg-[#0b1424] p-5">
+<span class="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-white/[0.05]">
+<iconify-icon class="text-lg text-emerald-400" icon="tabler:cpu"></iconify-icon>
+</span>
+<div>
+<h3 class="text-[15px] font-semibold text-white">链下对弈引擎</h3>
+<p class="mt-1.5 text-[13.5px] leading-relaxed text-slate-400">落子合法性校验、五连判定、平局判定、悔棋与计时全部在浏览器本地状态机执行，零链上调用。</p>
+</div>
+</div>
+<div class="flex gap-4 rounded-2xl border border-white/[0.08] bg-[#0b1424] p-5">
+<span class="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-white/[0.05]">
+<iconify-icon class="text-lg text-emerald-400" icon="tabler:hash"></iconify-icon>
+</span>
+<div>
+<h3 class="text-[15px] font-semibold text-white">终局摘要压缩</h3>
+<p class="mt-1.5 text-[13.5px] leading-relaxed text-slate-400">把整局落子序列、参与方与用时压缩成一个 32 字节摘要，只提交摘要与结算指令，链上数据体积极小。</p>
+</div>
+</div>
+<div class="flex gap-4 rounded-2xl border border-white/[0.08] bg-[#0b1424] p-5">
+<span class="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-white/[0.05]">
+<iconify-icon class="text-lg text-emerald-400" icon="tabler:key"></iconify-icon>
+</span>
+<div>
+<h3 class="text-[15px] font-semibold text-white">双向签名验证</h3>
+<p class="mt-1.5 text-[13.5px] leading-relaxed text-slate-400">双方对终局摘要各自签名，合约只校验签名与积分变动规则，避免把整局棋谱塞进链上存储。</p>
+</div>
+</div>
+<div class="flex gap-4 rounded-2xl border border-white/[0.08] bg-[#0b1424] p-5">
+<span class="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-white/[0.05]">
+<iconify-icon class="text-lg text-emerald-400" icon="tabler:box-multiple"></iconify-icon>
+</span>
+<div>
+<h3 class="text-[15px] font-semibold text-white">批量结算（进阶）</h3>
+<p class="mt-1.5 text-[13.5px] leading-relaxed text-slate-400">多局结算可合并为一棵 Merkle 树，仅提交一次根哈希，进一步降低高并发场景下的链上事务压力。</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section class="mx-auto max-w-[1200px] px-6 py-16">
+<div class="grid gap-5 rounded-2xl border border-white/[0.08] bg-[#0b1424] p-8 sm:grid-cols-2 lg:grid-cols-4">
+<div class="sm:border-r sm:border-white/[0.06] sm:pr-6">
+<p class="font-mono text-[30px] font-semibold text-white">≤ 1</p>
+<p class="mt-1 text-sm text-slate-400">每局链上存证笔数</p>
+</div>
+<div class="lg:border-r lg:border-white/[0.06] lg:pr-6">
+<p class="font-mono text-[30px] font-semibold text-emerald-400">97%</p>
+<p class="mt-1 text-sm text-slate-400">链上事务量下降幅度</p>
+</div>
+<div class="lg:border-r lg:border-white/[0.06] lg:pr-6">
+<p class="font-mono text-[30px] font-semibold text-white">32</p>
+<p class="mt-1 text-sm text-slate-400">结算确认区块数</p>
+</div>
+<div>
+<p class="font-mono text-[30px] font-semibold text-white">225</p>
+<p class="mt-1 text-sm text-slate-400">棋盘落点总数（15×15）</p>
+</div>
+</div>
+</section>
+<section class="border-t border-white/[0.06] bg-[#080e1a]">
+<div class="mx-auto max-w-[1200px] px-6 py-16">
+<div class="flex flex-wrap items-end justify-between gap-4">
+<div>
+<p class="text-xs font-medium tracking-[0.2em] text-emerald-400">SETTLEMENT FLOW</p>
+<h2 class="mt-3 text-[28px] font-bold text-white">从落子到链上积分的四步</h2>
+</div>
+<a class="inline-flex items-center gap-2 text-sm font-medium text-emerald-300 transition hover:text-emerald-200" href="game.html">
+          立即体验完整流程
+          <iconify-icon class="text-base" icon="tabler:arrow-right"></iconify-icon>
+</a>
+</div>
+<ol class="mt-10 grid gap-5 lg:grid-cols-4">
+<li class="rounded-2xl border border-white/[0.08] bg-[#0b1424] p-6">
+<span class="font-mono text-xs text-emerald-400">STEP 01</span>
+<h3 class="mt-3 flex items-center gap-2 text-base font-semibold text-white">
+<iconify-icon class="text-lg text-emerald-400" icon="tabler:circle-dot"></iconify-icon>
+            链下对弈
+          </h3>
+<p class="mt-2 text-[13.5px] leading-relaxed text-slate-400">双方在 15×15 棋盘轮流落子，判定与计时全部本地完成，链上存证笔数保持为 0。</p>
+</li>
+<li class="rounded-2xl border border-white/[0.08] bg-[#0b1424] p-6">
+<span class="font-mono text-xs text-emerald-400">STEP 02</span>
+<h3 class="mt-3 flex items-center gap-2 text-base font-semibold text-white">
+<iconify-icon class="text-lg text-emerald-400" icon="tabler:fingerprint"></iconify-icon>
+            生成终局摘要
+          </h3>
+<p class="mt-2 text-[13.5px] leading-relaxed text-slate-400">对局结束后生成摘要哈希与双方签名，作为结果的唯一数据凭证。</p>
+</li>
+<li class="rounded-2xl border border-white/[0.08] bg-[#0b1424] p-6">
+<span class="font-mono text-xs text-emerald-400">STEP 03</span>
+<h3 class="mt-3 flex items-center gap-2 text-base font-semibold text-white">
+<iconify-icon class="text-lg text-emerald-400" icon="tabler:send"></iconify-icon>
+            提交单笔结算
+          </h3>
+<p class="mt-2 text-[13.5px] leading-relaxed text-slate-400">仅广播 1 笔结算存证，包含双方地址与积分变动，不携带整局棋谱。</p>
+</li>
+<li class="rounded-2xl border border-white/[0.08] bg-[#0b1424] p-6">
+<span class="font-mono text-xs text-emerald-400">STEP 04</span>
+<h3 class="mt-3 flex items-center gap-2 text-base font-semibold text-white">
+<iconify-icon class="text-lg text-emerald-400" icon="tabler:shield-check"></iconify-icon>
+            链上确认写账
+          </h3>
+<p class="mt-2 text-[13.5px] leading-relaxed text-slate-400">存证打包进区块并累积确认数，积分账本随之更新，凭证可在对局记录页查阅。</p>
+</li>
+</ol>
+</div>
+</section>
+<footer class="border-t border-white/[0.06]">
+<div class="mx-auto flex max-w-[1200px] flex-col gap-3 px-6 py-8 text-xs text-slate-500 sm:flex-row sm:items-center sm:justify-between">
+<p>© 2026 链上五子棋原型演示 · 页面内区块链数据均为模拟数据，用于方案验证</p>
+<div class="flex items-center gap-5">
+<button class="transition hover:text-slate-300" id="footerStartBtn" type="button">开始对局</button>
+<a class="transition hover:text-slate-300" href="records.html">对局记录</a>
+</div>
+</div>
+</footer>
+<div class="fixed inset-0 z-[60] hidden items-center justify-center bg-[#03060c]/80 px-6 backdrop-blur" id="matchOverlay">
+<div class="w-full max-w-[380px] rounded-2xl border border-white/[0.1] bg-[#0b1424] p-6 shadow-[0_40px_80px_-40px_rgba(16,185,129,0.6)]">
+<div class="flex items-center justify-between">
+<h2 class="flex items-center gap-2 text-[15px] font-semibold text-white">
+<iconify-icon class="text-lg text-emerald-400" icon="tabler:users-group"></iconify-icon>
+          正在匹配对手
+        </h2>
+<span class="flex items-center gap-1.5 rounded-full bg-white/[0.06] px-2.5 py-1 text-[10.5px] text-emerald-300">
+<span class="h-1.5 w-1.5 animate-pulse rounded-full bg-emerald-400"></span>
+          MATCHING
+        </span>
+</div>
+<div class="mt-6 grid place-items-center">
+<div class="relative grid h-20 w-20 place-items-center">
+<span class="absolute inset-0 animate-ping rounded-full bg-emerald-500/20"></span>
+<span class="grid h-16 w-16 place-items-center rounded-full bg-emerald-500/15 ring-1 ring-emerald-400/30">
+<iconify-icon class="text-3xl text-emerald-300" icon="tabler:radar"></iconify-icon>
+</span>
+</div>
+<p class="mt-5 font-mono text-[15px] text-emerald-300">已匹配 <span id="matchElapsed">0</span>s</p>
+<p class="mt-2 text-center text-[12.5px] leading-relaxed text-slate-400">正在为你在链下大厅寻找实力相近的对手…</p>
+</div>
+<div class="mt-6 space-y-2.5 rounded-xl border border-white/[0.06] bg-[#070c16] p-4 text-[12px]">
+<div class="flex items-center justify-between">
+<span class="text-slate-400">匹配模式</span>
+<span class="text-slate-200">标准 15 × 15</span>
+</div>
+<div class="flex items-center justify-between">
+<span class="text-slate-400">当前在线</span>
+<span class="font-mono text-slate-200">1,286 位玩家</span>
+</div>
+<div class="flex items-center justify-between">
+<span class="text-slate-400">预计等待</span>
+<span class="font-mono text-slate-200">5 ~ 10s</span>
+</div>
+</div>
+<div class="mt-5">
+<button class="flex w-full items-center justify-center gap-2 rounded-xl border border-white/[0.12] bg-white/[0.04] px-4 py-3 text-sm text-slate-200 transition hover:bg-white/[0.08]" id="cancelMatchBtn" type="button">
+  <iconify-icon class="text-base" icon="tabler:x"></iconify-icon>
+  取消匹配
+</button>
+</div>
+<p class="mt-3 text-center text-[11px] text-slate-500">匹配成功后自动进入对局页，对局结束后进入结算页</p>
+</div>
+</div>
+<script>
+    var matchOverlay = document.getElementById("matchOverlay");
+    var matchElapsedEl = document.getElementById("matchElapsed");
+    var matchTimerId = null;
+    var matchSeconds = 0;
+
+    function openMatch() {
+      matchSeconds = 0;
+      matchElapsedEl.textContent = "0";
+      matchOverlay.classList.remove("hidden");
+      matchOverlay.classList.add("flex");
+      if (matchTimerId) clearInterval(matchTimerId);
+      matchTimerId = setInterval(function () {
+        matchSeconds += 1;
+        matchElapsedEl.textContent = String(matchSeconds);
+      }, 1000);
+    }
+
+    function closeMatch() {
+      if (matchTimerId) { clearInterval(matchTimerId); matchTimerId = null; }
+      matchOverlay.classList.add("hidden");
+      matchOverlay.classList.remove("flex");
+    }
+
+    function confirmMatch() {
+      if (matchTimerId) { clearInterval(matchTimerId); matchTimerId = null; }
+      matchOverlay.classList.add("hidden");
+      matchOverlay.classList.remove("flex");
+      window.location.href = "game.html";
+    }
+
+    document.getElementById("startMatchBtn").addEventListener("click", openMatch);
+    document.getElementById("footerStartBtn").addEventListener("click", openMatch);
+    document.getElementById("cancelMatchBtn").addEventListener("click", closeMatch);
+    var autoMatchId = null;
+    document.getElementById("startMatchBtn").addEventListener("click", function () {
+      if (autoMatchId) clearTimeout(autoMatchId);
+      autoMatchId = setTimeout(confirmMatch, 5000);
+    });
+    document.getElementById("footerStartBtn").addEventListener("click", function () {
+      if (autoMatchId) clearTimeout(autoMatchId);
+      autoMatchId = setTimeout(confirmMatch, 5000);
+    });
+    document.getElementById("cancelMatchBtn").addEventListener("click", function () {
+      if (autoMatchId) { clearTimeout(autoMatchId); autoMatchId = null; }
+    });
+  </script>
+<!-- GAME_RULES_MODAL_START -->
+<div aria-labelledby="gameRulesTitle" aria-modal="true" class="fixed inset-0 z-[100] hidden" id="gameRulesModal" role="dialog">
+  <div class="absolute inset-0 bg-black/70 backdrop-blur-sm" data-close-rules="1"></div>
+  <div class="relative mx-auto flex min-h-screen max-w-[760px] items-center justify-center px-4 py-8">
+    <section class="relative max-h-[88vh] w-full overflow-hidden rounded-3xl border border-white/[0.10] bg-[#0b1424] shadow-2xl shadow-black/50 ring-1 ring-emerald-400/10">
+      <div class="flex items-center justify-between border-b border-white/[0.08] px-6 py-5">
+        <div>
+          <div class="flex items-center gap-2 text-emerald-300">
+            <iconify-icon class="text-lg" icon="tabler:book-2"></iconify-icon>
+            <span class="text-xs font-medium tracking-wide">GAME RULES</span>
+          </div>
+          <h2 class="mt-1 text-xl font-semibold text-white" id="gameRulesTitle">游戏规则</h2>
+        </div>
+        <button aria-label="关闭游戏规则" class="grid h-9 w-9 place-items-center rounded-xl text-slate-400 transition hover:bg-white/[0.06] hover:text-white" data-close-rules="1" type="button">
+          <iconify-icon class="text-lg" icon="tabler:x"></iconify-icon>
+        </button>
+      </div>
+      <div class="max-h-[calc(88vh-82px)] overflow-y-auto px-6 py-6">
+        <div class="grid gap-4 md:grid-cols-2">
+          <div class="rounded-2xl border border-white/[0.08] bg-white/[0.025] p-5">
+            <div class="flex items-center gap-3">
+              <span class="grid h-9 w-9 place-items-center rounded-xl bg-emerald-500/10 text-emerald-300 ring-1 ring-emerald-400/20"><iconify-icon icon="tabler:click"></iconify-icon></span>
+              <h3 class="font-semibold text-white">五子棋下法</h3>
+            </div>
+            <ol class="mt-4 space-y-3 text-[13px] leading-relaxed text-slate-300">
+              <li><span class="mr-2 font-mono text-emerald-300">01</span>双方在线匹配后进入同一盘对局，青方先手，金方后手。</li>
+              <li><span class="mr-2 font-mono text-emerald-300">02</span>轮到自己时，点击棋盘交叉点落子；每次落子占用 1 手。</li>
+              <li><span class="mr-2 font-mono text-emerald-300">03</span>棋子落下后不能移动；双方依次落子，直到产生胜负或和棋。</li>
+              <li><span class="mr-2 font-mono text-emerald-300">04</span>任意一方横、竖或斜向连续形成 5 子，即刻获胜，对局结束。</li>
+              <li><span class="mr-2 font-mono text-emerald-300">05</span>棋盘全部落满仍没有五连，则判定为平局。</li>
+            </ol>
+          </div>
+          <div class="rounded-2xl border border-white/[0.08] bg-white/[0.025] p-5">
+            <div class="flex items-center gap-3">
+              <span class="grid h-9 w-9 place-items-center rounded-xl bg-amber-500/10 text-amber-300 ring-1 ring-amber-400/20"><iconify-icon icon="tabler:coins"></iconify-icon></span>
+              <h3 class="font-semibold text-white">分数结算</h3>
+            </div>
+            <div class="mt-4 space-y-3 text-[13px] leading-relaxed">
+              <div class="flex items-center justify-between rounded-xl bg-white/[0.03] px-4 py-3"><span class="text-slate-300">胜方</span><span class="font-mono font-semibold text-emerald-300">+100 基础分</span></div>
+              <div class="flex items-center justify-between rounded-xl bg-white/[0.03] px-4 py-3"><span class="text-slate-300">手数效率</span><span class="font-mono font-semibold text-amber-300">+5 ～ +30</span></div>
+              <div class="flex items-center justify-between rounded-xl bg-white/[0.03] px-4 py-3"><span class="text-slate-300">负方</span><span class="font-mono font-semibold text-rose-300">-40</span></div>
+              <div class="flex items-center justify-between rounded-xl bg-white/[0.03] px-4 py-3"><span class="text-slate-300">平局双方</span><span class="font-mono font-semibold text-sky-300">各 +20</span></div>
+            </div>
+            <p class="mt-4 text-[12px] leading-relaxed text-slate-500">胜方总得分 = 100 基础分 + 手数效率加成。现有原型采用 +5～+30 的效率加成区间，手数越少，加成越高。</p>
+          </div>
+        </div>
+        <div class="mt-4 rounded-2xl border border-emerald-400/15 bg-emerald-500/[0.06] p-5">
+          <div class="flex items-start gap-3">
+            <iconify-icon class="mt-0.5 text-lg text-emerald-300" icon="tabler:shield-check"></iconify-icon>
+            <div>
+              <h3 class="font-semibold text-white">结算与链上存证</h3>
+              <p class="mt-1 text-[12.5px] leading-relaxed text-slate-400">对局在链下完成。终局后按上述规则计算双方积分，并生成本局结果摘要；每局只提交 1 笔链上结算存证，记录终局摘要、双方地址与积分结果。</p>
+            </div>
+          </div>
+        </div>
+        <p class="mt-4 text-center text-[11px] text-slate-500">提示：游戏规则可在对局过程中随时打开查看，不会离开当前对局页面。</p>
+      </div>
+    </section>
+  </div>
+</div>
+<!-- GAME_RULES_MODAL_END -->
+<script>
+(function(){
+  var modal = document.getElementById('gameRulesModal');
+  if (!modal) return;
+  function openRules(){ modal.classList.remove('hidden'); document.body.classList.add('overflow-hidden'); }
+  function closeRules(){ modal.classList.add('hidden'); document.body.classList.remove('overflow-hidden'); }
+  document.querySelectorAll('[data-open-rules]').forEach(function(btn){ btn.addEventListener('click', openRules); });
+  modal.querySelectorAll('[data-close-rules]').forEach(function(btn){ btn.addEventListener('click', closeRules); });
+  document.addEventListener('keydown', function(e){ if(e.key === 'Escape' && !modal.classList.contains('hidden')) closeRules(); });
+})();
+</script>
+
+</body>
+</html>
