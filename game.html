@@ -7,27 +7,36 @@
 <title>链上五子棋 · 对局</title>
 <script src="https://modao.cc/agent-py/static/source/js/tailwindcss.js"></script>
 <script src="https://modao.cc/agent-py/static/source/js/iconify-icon.min.js"></script>
-</head>
-<body class="min-h-screen bg-[#070c16] text-slate-200 antialiased">
-<header class="sticky top-0 z-40 border-b border-white/[0.08] bg-[#070c16]/90 backdrop-blur">
+<style>
+body{background:#f3f0e8!important;color:#191918!important}
+header{background:rgba(250,249,245,.94)!important;border-color:#d8d3c9!important}
+#board{background:#b08a55!important;border-color:#8e6b3f!important;box-shadow:0 12px 28px rgba(72,48,20,.16)}
+#board>button{background:#c7a46b!important;border-color:#765936!important}
+#board>button:hover{background:#d9b982!important}
+#board .bg-stone-900{background:#171716!important;box-shadow:2px 3px 6px rgba(0,0,0,.35)}
+#board .bg-stone-100{background:#f7f5ef!important;box-shadow:2px 3px 6px rgba(0,0,0,.20);border:1px solid #aaa}
+#board .ring-stone-500\/60,#board .ring-stone-500\/70{--tw-ring-color:#8b7352!important}
+</style></head>
+<body class="min-h-screen bg-[#f3f0e8] text-stone-900 antialiased">
+<header class="sticky top-0 z-40 border-b border-stone-300 bg-[#f3f0e8]/90 backdrop-blur">
 <div class="mx-auto flex h-16 max-w-[1200px] items-center justify-between gap-6 px-6">
 <a class="flex items-center gap-3" href="index.html">
-<span class="grid h-9 w-9 place-items-center rounded-xl bg-emerald-500/15 ring-1 ring-emerald-400/30">
-<iconify-icon class="text-xl text-emerald-400" icon="tabler:grid-dots"></iconify-icon>
+<span class="grid h-9 w-9 place-items-center rounded-xl bg-stone-900/15 ring-1 ring-stone-500/30">
+<iconify-icon class="text-xl text-stone-800" icon="tabler:grid-dots"></iconify-icon>
 </span>
 <span class="leading-tight">
-<span class="block text-[15px] font-semibold text-white">链上五子棋</span>
-<span class="block text-[10px] font-medium tracking-[0.22em] text-slate-500">CHAIN GOMOKU</span>
+<span class="block text-[15px] font-semibold text-stone-900">链上五子棋</span>
+<span class="block text-[10px] font-medium tracking-[0.22em] text-stone-500">CHAIN GOMOKU</span>
 </span>
 </a>
 <nav class="hidden items-center gap-1 md:flex">
-<a class="rounded-lg px-4 py-2 text-sm text-slate-400 transition hover:bg-white/[0.06] hover:text-white" href="index.html">首页</a>
-<a class="rounded-lg bg-emerald-500/15 px-4 py-2 text-sm font-medium text-emerald-300 ring-1 ring-emerald-400/30" href="game.html">对局</a>
-<a class="rounded-lg px-4 py-2 text-sm text-slate-400 transition hover:bg-white/[0.06] hover:text-white" href="records.html">对局记录</a>
-<button class="rounded-lg px-4 py-2 text-sm text-slate-400 transition hover:bg-white/[0.06] hover:text-white" data-open-rules="1" type="button">游戏规则</button>
+<a class="rounded-lg px-4 py-2 text-sm text-stone-600 transition hover:bg-stone-900/[0.06] hover:text-stone-900" href="index.html">首页</a>
+<a class="rounded-lg bg-stone-900/15 px-4 py-2 text-sm font-medium text-stone-700 ring-1 ring-stone-500/30" href="game.html">对局</a>
+<a class="rounded-lg px-4 py-2 text-sm text-stone-600 transition hover:bg-stone-900/[0.06] hover:text-stone-900" href="records.html">对局记录</a>
+<button class="rounded-lg px-4 py-2 text-sm text-stone-600 transition hover:bg-stone-900/[0.06] hover:text-stone-900" data-open-rules="1" type="button">游戏规则</button>
 </nav>
-<div class="hidden items-center gap-2 rounded-full border border-white/[0.08] bg-white/[0.03] px-3 py-1.5 text-xs text-slate-400 lg:flex">
-<span class="h-1.5 w-1.5 animate-pulse rounded-full bg-emerald-400"></span>
+<div class="hidden items-center gap-2 rounded-full border border-stone-300 bg-stone-900/[0.04] px-3 py-1.5 text-xs text-stone-600 lg:flex">
+<span class="h-1.5 w-1.5 animate-pulse rounded-full bg-stone-900"></span>
         链下对弈中 · 链上存证 0 笔
       </div>
 </div>
@@ -35,209 +44,209 @@
 <main class="mx-auto max-w-[1200px] px-6 py-8">
 <div class="grid gap-6 lg:grid-cols-[minmax(0,1fr)_368px]">
 <section class="space-y-5">
-<div class="flex flex-wrap items-center justify-between gap-4 rounded-2xl border border-white/[0.08] bg-[#0b1424] px-5 py-4">
+<div class="flex flex-wrap items-center justify-between gap-4 rounded-2xl border border-stone-300 bg-[#fbfaf7] px-5 py-4">
 <div class="flex items-center gap-5">
 <div>
-<p class="text-[11px] tracking-wide text-slate-500">当前手数</p>
-<p class="mt-1 font-mono text-xl font-semibold text-white"><span id="moveNo">0</span></p>
+<p class="text-[11px] tracking-wide text-stone-500">当前手数</p>
+<p class="mt-1 font-mono text-xl font-semibold text-stone-900"><span id="moveNo">0</span></p>
 </div>
 <div class="h-9 w-px bg-white/[0.08]"></div>
 <div>
-<p class="text-[11px] tracking-wide text-slate-500">轮到落子</p>
+<p class="text-[11px] tracking-wide text-stone-500">轮到落子</p>
 <div class="mt-1 flex items-center gap-2">
-<span class="h-3.5 w-3.5 rounded-full bg-emerald-400 shadow-[0_0_10px_rgba(52,211,153,0.7)]" id="turnDot"></span>
-<span class="text-[15px] font-medium text-white" id="turnName">青方玩家</span>
+<span class="h-3.5 w-3.5 rounded-full bg-stone-900 shadow-[0_0_10px_rgba(52,211,153,0.7)]" id="turnDot"></span>
+<span class="text-[15px] font-medium text-stone-900" id="turnName">黑方玩家</span>
 </div>
 </div>
 <div class="h-9 w-px bg-white/[0.08]"></div>
 <div>
-<p class="text-[11px] tracking-wide text-slate-500">对局用时</p>
-<p class="mt-1 font-mono text-xl font-semibold text-white" id="timer">00:00</p>
+<p class="text-[11px] tracking-wide text-stone-500">对局用时</p>
+<p class="mt-1 font-mono text-xl font-semibold text-stone-900" id="timer">00:00</p>
 </div>
 </div>
-<span class="inline-flex items-center gap-2 rounded-full border border-white/[0.08] bg-white/[0.03] px-3 py-1.5 text-[11.5px] text-slate-400">
-<iconify-icon class="text-sm text-amber-400" icon="tabler:coin"></iconify-icon>
+<span class="inline-flex items-center gap-2 rounded-full border border-stone-300 bg-stone-900/[0.04] px-3 py-1.5 text-[11.5px] text-stone-600">
+<iconify-icon class="text-sm text-stone-700" icon="tabler:coin"></iconify-icon>
             终局按胜负与手数结算积分
           </span>
 </div>
-<div class="hidden items-center justify-between gap-5 rounded-2xl border border-emerald-400/30 bg-emerald-500/[0.09] px-5 py-4" id="resultBanner">
+<div class="hidden items-center justify-between gap-5 rounded-2xl border border-stone-500/30 bg-stone-900/[0.09] px-5 py-4" id="resultBanner">
 <div class="flex items-center gap-4">
-<span class="grid h-11 w-11 place-items-center rounded-xl bg-emerald-500/15 ring-1 ring-emerald-400/30">
-<iconify-icon class="text-xl text-emerald-300" icon="tabler:trophy"></iconify-icon>
+<span class="grid h-11 w-11 place-items-center rounded-xl bg-stone-900/15 ring-1 ring-stone-500/30">
+<iconify-icon class="text-xl text-stone-700" icon="tabler:trophy"></iconify-icon>
 </span>
 <div>
-<p class="text-[15px] font-semibold text-white" id="resultTitle">对局结束</p>
-<p class="mt-1 text-[13px] text-slate-400" id="resultDesc">链下对局已完成，等待提交链上结算。</p>
+<p class="text-[15px] font-semibold text-stone-900" id="resultTitle">对局结束</p>
+<p class="mt-1 text-[13px] text-stone-600" id="resultDesc">链下对局已完成，等待提交链上结算。</p>
 </div>
 </div>
 <div class="flex items-center gap-3">
-<a class="inline-flex items-center gap-2 rounded-xl bg-emerald-500 px-5 py-2.5 text-sm font-semibold text-[#04140d] transition hover:bg-emerald-400" href="settlement.html" id="settleLinkTop">
+<a class="inline-flex items-center gap-2 rounded-xl bg-stone-900 px-5 py-2.5 text-sm font-semibold text-[#f3ead8] transition hover:bg-stone-900" href="settlement.html" id="settleLinkTop">
 <iconify-icon class="text-base" icon="tabler:send"></iconify-icon>
               提交链上结算
             </a>
-<button class="rounded-xl border border-white/[0.12] bg-white/[0.04] px-4 py-2.5 text-sm text-slate-200 transition hover:bg-white/[0.08]" id="restartTop" type="button">再来一局</button>
+<button class="rounded-xl border border-white/[0.12] bg-stone-900/[0.04] px-4 py-2.5 text-sm text-stone-900 transition hover:bg-stone-900/[0.08]" id="restartTop" type="button">再来一局</button>
 </div>
 </div>
-<div class="rounded-2xl border border-white/[0.08] bg-[#0b1424] p-5">
+<div class="rounded-2xl border border-stone-300 bg-[#fbfaf7] p-5">
 <div class="mb-4 flex items-center justify-between">
-<div class="flex items-center gap-2 text-sm text-slate-300">
-<iconify-icon class="text-base text-emerald-400" icon="tabler:grid-4x4"></iconify-icon>
+<div class="flex items-center gap-2 text-sm text-stone-800">
+<iconify-icon class="text-base text-stone-800" icon="tabler:grid-4x4"></iconify-icon>
               15 × 15 棋盘 · 链下对弈
             </div>
-<span class="text-[11.5px] text-slate-500">点击交叉点落子，五子连珠即胜</span>
+<span class="text-[11.5px] text-stone-500">点击交叉点落子，五子连珠即胜</span>
 </div>
 <div class="mx-auto w-full max-w-[640px]">
-<div class="grid gap-px rounded-xl bg-[#22304a] p-px" id="board" style="grid-template-columns:repeat(15,minmax(0,1fr));"></div>
+<div class="grid gap-px rounded-xl bg-[#aa8754] p-px" id="board" style="grid-template-columns:repeat(15,minmax(0,1fr));"></div>
 </div>
-<div class="mt-4 flex flex-wrap items-center justify-between gap-3 border-t border-white/[0.06] pt-4">
-<div class="flex items-center gap-5 text-[12.5px] text-slate-400">
-<span class="flex items-center gap-2"><span class="h-3 w-3 rounded-full bg-emerald-400"></span>青方玩家 · 0x7A3f…c91D</span>
-<span class="flex items-center gap-2"><span class="h-3 w-3 rounded-full bg-amber-400"></span>金方玩家 · 0x2Ec4…8b07</span>
+<div class="mt-4 flex flex-wrap items-center justify-between gap-3 border-t border-stone-300 pt-4">
+<div class="flex items-center gap-5 text-[12.5px] text-stone-600">
+<span class="flex items-center gap-2"><span class="h-3 w-3 rounded-full bg-stone-900"></span>黑方玩家 · 0x7A3f…c91D</span>
+<span class="flex items-center gap-2"><span class="h-3 w-3 rounded-full bg-stone-100"></span>白方玩家 · 0x2Ec4…8b07</span>
 </div>
-<span class="inline-flex items-center gap-1.5 text-[12px] text-slate-500">
-<iconify-icon class="text-sm text-slate-400" icon="tabler:cloud-off"></iconify-icon>
+<span class="inline-flex items-center gap-1.5 text-[12px] text-stone-500">
+<iconify-icon class="text-sm text-stone-600" icon="tabler:cloud-off"></iconify-icon>
               本局所有落子仅在本地状态机执行
             </span>
 </div>
 </div>
-<div class="rounded-2xl border border-white/[0.08] bg-[#0b1424] p-5">
-<h2 class="flex items-center gap-2 text-sm font-medium text-slate-200">
-<iconify-icon class="text-base text-emerald-400" icon="tabler:settings"></iconify-icon>
+<div class="rounded-2xl border border-stone-300 bg-[#fbfaf7] p-5">
+<h2 class="flex items-center gap-2 text-sm font-medium text-stone-900">
+<iconify-icon class="text-base text-stone-800" icon="tabler:settings"></iconify-icon>
             对局控制
           </h2>
 <div class="mt-4 space-y-3">
-<a class="pointer-events-none flex items-center justify-center gap-2 rounded-xl bg-emerald-500/35 px-4 py-3 text-sm font-semibold text-[#04140d] opacity-45 transition" href="settlement.html" id="settleLink">
+<a class="pointer-events-none flex items-center justify-center gap-2 rounded-xl bg-stone-900/35 px-4 py-3 text-sm font-semibold text-[#f3ead8] opacity-45 transition" href="settlement.html" id="settleLink">
 <iconify-icon class="text-base" icon="tabler:send"></iconify-icon>
               提交链上结算（1 笔存证）
             </a>
-<p class="text-center text-[11.5px] text-slate-500" id="settleHint">对局结束后可提交结算</p>
+<p class="text-center text-[11.5px] text-stone-500" id="settleHint">对局结束后可提交结算</p>
 <div class="grid grid-cols-2 gap-3">
-<button class="flex items-center justify-center gap-2 rounded-xl border border-white/[0.12] bg-white/[0.04] px-4 py-2.5 text-sm text-slate-200 transition hover:bg-white/[0.08] disabled:cursor-not-allowed disabled:opacity-40" id="undoBtn" type="button">
+<button class="flex items-center justify-center gap-2 rounded-xl border border-white/[0.12] bg-stone-900/[0.04] px-4 py-2.5 text-sm text-stone-900 transition hover:bg-stone-900/[0.08] disabled:cursor-not-allowed disabled:opacity-40" id="undoBtn" type="button">
 <iconify-icon class="text-base" icon="tabler:arrow-back-up"></iconify-icon>
                 悔棋
               </button>
-<button class="flex items-center justify-center gap-2 rounded-xl border border-white/[0.12] bg-white/[0.04] px-4 py-2.5 text-sm text-slate-200 transition hover:bg-white/[0.08]" id="restartBtn" type="button">
+<button class="flex items-center justify-center gap-2 rounded-xl border border-white/[0.12] bg-stone-900/[0.04] px-4 py-2.5 text-sm text-stone-900 transition hover:bg-stone-900/[0.08]" id="restartBtn" type="button">
 <iconify-icon class="text-base" icon="tabler:refresh"></iconify-icon>
                 重新开局
               </button>
 </div>
 </div>
 </div>
-<div class="rounded-2xl border border-white/[0.08] bg-[#0b1424] p-5">
+<div class="rounded-2xl border border-stone-300 bg-[#fbfaf7] p-5">
 <div class="mb-3 flex items-center justify-between">
-<h2 class="flex items-center gap-2 text-sm font-medium text-slate-200">
-<iconify-icon class="text-base text-emerald-400" icon="tabler:list-numbers"></iconify-icon>
+<h2 class="flex items-center gap-2 text-sm font-medium text-stone-900">
+<iconify-icon class="text-base text-stone-800" icon="tabler:list-numbers"></iconify-icon>
               落子记录（链下，最新在前）
             </h2>
-<span class="font-mono text-[11.5px] text-slate-500" id="logCount">0 手</span>
+<span class="font-mono text-[11.5px] text-stone-500" id="logCount">0 手</span>
 </div>
 <div class="h-[168px] space-y-2 overflow-y-auto pr-1 [scrollbar-width:none] [&amp;::-webkit-scrollbar]:hidden" id="moveLog">
-<p class="rounded-xl border border-dashed border-white/[0.12] px-4 py-6 text-center text-[12.5px] text-slate-500" id="logEmpty">
+<p class="rounded-xl border border-dashed border-white/[0.12] px-4 py-6 text-center text-[12.5px] text-stone-500" id="logEmpty">
               尚未落子，点击棋盘开始对局
             </p>
 </div>
 </div>
 </section>
 <aside class="space-y-4">
-<div class="rounded-2xl border border-emerald-400/25 bg-emerald-500/[0.06] p-5">
+<div class="rounded-2xl border border-stone-500/25 bg-stone-900/[0.06] p-5">
 <div class="flex items-center justify-between">
-<h2 class="flex items-center gap-2 text-sm font-medium text-emerald-200">
-<iconify-icon class="text-base text-emerald-400" icon="tabler:database"></iconify-icon>
+<h2 class="flex items-center gap-2 text-sm font-medium text-stone-700">
+<iconify-icon class="text-base text-stone-800" icon="tabler:database"></iconify-icon>
               链上负担监控
             </h2>
-<span class="rounded-full bg-white/[0.06] px-2.5 py-1 font-mono text-[10.5px] text-emerald-300">实时</span>
+<span class="rounded-full bg-stone-900/[0.06] px-2.5 py-1 font-mono text-[10.5px] text-stone-700">实时</span>
 </div>
 <div class="mt-4 grid grid-cols-2 gap-3">
-<div class="rounded-xl border border-white/[0.08] bg-[#070c16] px-3.5 py-3">
-<p class="text-[10.5px] text-slate-500">链下操作</p>
-<p class="mt-1 font-mono text-[17px] font-semibold text-white"><span id="offchainOps">0</span> <span class="text-[11px] text-slate-500">次落子</span></p>
+<div class="rounded-xl border border-stone-300 bg-[#f3f0e8] px-3.5 py-3">
+<p class="text-[10.5px] text-stone-500">链下操作</p>
+<p class="mt-1 font-mono text-[17px] font-semibold text-stone-900"><span id="offchainOps">0</span> <span class="text-[11px] text-stone-500">次落子</span></p>
 </div>
-<div class="rounded-xl border border-white/[0.08] bg-[#070c16] px-3.5 py-3">
-<p class="text-[10.5px] text-slate-500">链上存证</p>
-<p class="mt-1 font-mono text-[17px] font-semibold text-amber-300"><span id="chainTx">0</span> <span class="text-[11px] text-slate-500">笔</span></p>
+<div class="rounded-xl border border-stone-300 bg-[#f3f0e8] px-3.5 py-3">
+<p class="text-[10.5px] text-stone-500">链上存证</p>
+<p class="mt-1 font-mono text-[17px] font-semibold text-stone-700"><span id="chainTx">0</span> <span class="text-[11px] text-stone-500">笔</span></p>
 </div>
 </div>
-<div class="mt-4 space-y-3.5 rounded-xl border border-white/[0.08] bg-[#070c16] p-4">
+<div class="mt-4 space-y-3.5 rounded-xl border border-stone-300 bg-[#f3f0e8] p-4">
 <div>
 <div class="flex items-center justify-between text-[12px]">
-<span class="text-slate-300">链下落子事件</span>
-<span class="font-mono text-slate-400" id="barOffchainLabel">0</span>
+<span class="text-stone-800">链下落子事件</span>
+<span class="font-mono text-stone-600" id="barOffchainLabel">0</span>
 </div>
-<div class="mt-2 h-2 w-full overflow-hidden rounded-full bg-white/[0.06]">
-<div class="h-full w-0 rounded-full bg-emerald-400 transition-all duration-300" id="barOffchain"></div>
+<div class="mt-2 h-2 w-full overflow-hidden rounded-full bg-stone-900/[0.06]">
+<div class="h-full w-0 rounded-full bg-stone-900 transition-all duration-300" id="barOffchain"></div>
 </div>
 </div>
 <div>
 <div class="flex items-center justify-between text-[12px]">
-<span class="text-slate-300">链上结算存证</span>
-<span class="font-mono text-slate-400" id="barChainLabel">0</span>
+<span class="text-stone-800">链上结算存证</span>
+<span class="font-mono text-stone-600" id="barChainLabel">0</span>
 </div>
-<div class="mt-2 h-2 w-full overflow-hidden rounded-full bg-white/[0.06]">
-<div class="h-full w-0 rounded-full bg-amber-400 transition-all duration-300" id="barChain"></div>
+<div class="mt-2 h-2 w-full overflow-hidden rounded-full bg-stone-900/[0.06]">
+<div class="h-full w-0 rounded-full bg-stone-100 transition-all duration-300" id="barChain"></div>
 </div>
 </div>
-<p class="border-t border-white/[0.06] pt-3 text-[11.5px] leading-relaxed text-slate-500" id="compressHint">
+<p class="border-t border-stone-300 pt-3 text-[11.5px] leading-relaxed text-stone-500" id="compressHint">
               对局进行中：链上存证数保持 0，所有落子在浏览器本地完成。
             </p>
 </div>
 </div>
-<div class="rounded-2xl border border-white/[0.08] bg-[#0b1424] p-5">
-<h2 class="flex items-center gap-2 text-sm font-medium text-slate-200">
-<iconify-icon class="text-base text-emerald-400" icon="tabler:fingerprint"></iconify-icon>
+<div class="rounded-2xl border border-stone-300 bg-[#fbfaf7] p-5">
+<h2 class="flex items-center gap-2 text-sm font-medium text-stone-900">
+<iconify-icon class="text-base text-stone-800" icon="tabler:fingerprint"></iconify-icon>
             对局数据摘要
           </h2>
 <div class="mt-4 space-y-3">
-<div class="rounded-xl border border-white/[0.06] bg-[#070c16] px-3.5 py-3">
-<p class="text-[10.5px] text-slate-500">链下累积摘要（随落子更新）</p>
-<p class="mt-1 break-all font-mono text-[11.5px] leading-relaxed text-slate-300" id="digestText">0x00000000…</p>
+<div class="rounded-xl border border-stone-300 bg-[#f3f0e8] px-3.5 py-3">
+<p class="text-[10.5px] text-stone-500">链下累积摘要（随落子更新）</p>
+<p class="mt-1 break-all font-mono text-[11.5px] leading-relaxed text-stone-800" id="digestText">0x00000000…</p>
 </div>
 <div class="grid grid-cols-2 gap-3">
-<div class="rounded-xl border border-white/[0.06] bg-[#070c16] px-3.5 py-3">
-<p class="text-[10.5px] text-slate-500">青方地址</p>
-<p class="mt-1 font-mono text-[11.5px] text-slate-300">0x7A3f…c91D</p>
+<div class="rounded-xl border border-stone-300 bg-[#f3f0e8] px-3.5 py-3">
+<p class="text-[10.5px] text-stone-500">黑方地址</p>
+<p class="mt-1 font-mono text-[11.5px] text-stone-800">0x7A3f…c91D</p>
 </div>
-<div class="rounded-xl border border-white/[0.06] bg-[#070c16] px-3.5 py-3">
-<p class="text-[10.5px] text-slate-500">金方地址</p>
-<p class="mt-1 font-mono text-[11.5px] text-slate-300">0x2Ec4…8b07</p>
-</div>
-</div>
-<div class="flex items-center justify-between rounded-xl border border-white/[0.06] bg-[#070c16] px-3.5 py-3">
-<span class="text-[11.5px] text-slate-400">待提交存证</span>
-<span class="rounded-full bg-white/[0.06] px-2.5 py-1 text-[10.5px] text-slate-300" id="pendingState">对局中 · 未生成</span>
+<div class="rounded-xl border border-stone-300 bg-[#f3f0e8] px-3.5 py-3">
+<p class="text-[10.5px] text-stone-500">白方地址</p>
+<p class="mt-1 font-mono text-[11.5px] text-stone-800">0x2Ec4…8b07</p>
 </div>
 </div>
+<div class="flex items-center justify-between rounded-xl border border-stone-300 bg-[#f3f0e8] px-3.5 py-3">
+<span class="text-[11.5px] text-stone-600">待提交存证</span>
+<span class="rounded-full bg-stone-900/[0.06] px-2.5 py-1 text-[10.5px] text-stone-800" id="pendingState">对局中 · 未生成</span>
 </div>
-<div class="rounded-2xl border border-white/[0.08] bg-[#0b1424] p-5">
-<h2 class="flex items-center gap-2 text-sm font-medium text-slate-200">
-<iconify-icon class="text-base text-emerald-400" icon="tabler:chart-bar"></iconify-icon>
+</div>
+</div>
+<div class="rounded-2xl border border-stone-300 bg-[#fbfaf7] p-5">
+<h2 class="flex items-center gap-2 text-sm font-medium text-stone-900">
+<iconify-icon class="text-base text-stone-800" icon="tabler:chart-bar"></iconify-icon>
             本次会话统计
           </h2>
 <dl class="mt-4 space-y-2.5 text-[12.5px]">
 <div class="flex items-center justify-between">
-<dt class="text-slate-400">已完成对局</dt>
-<dd class="font-mono text-slate-200"><span id="statRounds">0</span> 局</dd>
+<dt class="text-stone-600">已完成对局</dt>
+<dd class="font-mono text-stone-900"><span id="statRounds">0</span> 局</dd>
 </div>
 <div class="flex items-center justify-between">
-<dt class="text-slate-400">累计链上存证</dt>
-<dd class="font-mono text-amber-300"><span id="statChain">0</span> 笔</dd>
+<dt class="text-stone-600">累计链上存证</dt>
+<dd class="font-mono text-stone-700"><span id="statChain">0</span> 笔</dd>
 </div>
 <div class="flex items-center justify-between">
-<dt class="text-slate-400">累计链下落子</dt>
-<dd class="font-mono text-slate-200"><span id="statOffchain">0</span> 次</dd>
+<dt class="text-stone-600">累计链下落子</dt>
+<dd class="font-mono text-stone-900"><span id="statOffchain">0</span> 次</dd>
 </div>
-<div class="flex items-center justify-between border-t border-white/[0.06] pt-2.5">
-<dt class="text-slate-400">平均链上压缩比</dt>
-<dd class="font-mono text-emerald-300" id="statRatio">—</dd>
+<div class="flex items-center justify-between border-t border-stone-300 pt-2.5">
+<dt class="text-stone-600">平均链上压缩比</dt>
+<dd class="font-mono text-stone-700" id="statRatio">—</dd>
 </div>
 </dl>
-<p class="mt-3 text-[11.5px] leading-relaxed text-slate-500">统计口径：仅终局结算计入链上存证，每局固定 1 笔。</p>
+<p class="mt-3 text-[11.5px] leading-relaxed text-stone-500">统计口径：仅终局结算计入链上存证，每局固定 1 笔。</p>
 </div>
-<div class="rounded-2xl border border-white/[0.08] bg-white/[0.02] p-5">
-<h2 class="flex items-center gap-2 text-sm font-medium text-slate-200">
-<iconify-icon class="text-base text-slate-400" icon="tabler:info-circle"></iconify-icon>
+<div class="rounded-2xl border border-stone-300 bg-white/[0.02] p-5">
+<h2 class="flex items-center gap-2 text-sm font-medium text-stone-900">
+<iconify-icon class="text-base text-stone-600" icon="tabler:info-circle"></iconify-icon>
             结算规则速览
           </h2>
-<ul class="mt-3 space-y-2 text-[12.5px] leading-relaxed text-slate-400">
+<ul class="mt-3 space-y-2 text-[12.5px] leading-relaxed text-stone-600">
 <li>胜方：基础分 +100，手数效率加成 +5 ~ +30</li>
 <li>负方：对局扣分 -40</li>
 <li>平局：双方各 +20 积分</li>
@@ -247,13 +256,13 @@
 </aside>
 </div>
 </main>
-<footer class="border-t border-white/[0.06]">
-<div class="mx-auto flex max-w-[1200px] flex-col gap-3 px-6 py-8 text-xs text-slate-500 sm:flex-row sm:items-center sm:justify-between">
+<footer class="border-t border-stone-300">
+<div class="mx-auto flex max-w-[1200px] flex-col gap-3 px-6 py-8 text-xs text-stone-500 sm:flex-row sm:items-center sm:justify-between">
 <p>© 2026 链上五子棋原型演示 · 区块链数据为模拟数据</p>
 <div class="flex items-center gap-5">
-<a class="transition hover:text-slate-300" href="index.html">返回首页</a>
-<a class="transition hover:text-slate-300" href="settlement.html">结算详情</a>
-<a class="transition hover:text-slate-300" href="records.html">链上记录</a>
+<a class="transition hover:text-stone-800" href="index.html">返回首页</a>
+<a class="transition hover:text-stone-800" href="settlement.html">结算详情</a>
+<a class="transition hover:text-stone-800" href="records.html">链上记录</a>
 </div>
 </div>
 </footer>
@@ -281,16 +290,16 @@
     function stoneClass(p, mode) {
       var base = "pointer-events-none absolute inset-[9%] rounded-full transition-all duration-200 ";
       if (mode === "preview") {
-        if (p === 1) return base + "bg-emerald-400/30 ring-1 ring-emerald-200/40 scale-90 opacity-100";
-        return base + "bg-amber-400/30 ring-1 ring-amber-200/40 scale-90 opacity-100";
+        if (p === 1) return base + "bg-stone-900/30 ring-1 ring-emerald-200/40 scale-90 opacity-100";
+        return base + "bg-stone-100/30 ring-1 ring-amber-200/40 scale-90 opacity-100";
       }
       if (mode === "win") {
         return base + (p === 1
-          ? "bg-emerald-300 ring-[3px] ring-white/80 scale-110 opacity-100 shadow-[0_0_20px_rgba(255,255,255,0.55)]"
-          : "bg-amber-300 ring-[3px] ring-white/80 scale-110 opacity-100 shadow-[0_0_20px_rgba(255,255,255,0.55)]");
+          ? "bg-stone-800 ring-[3px] ring-white/80 scale-110 opacity-100 shadow-[0_0_20px_rgba(255,255,255,0.55)]"
+          : "bg-stone-100 ring-[3px] ring-white/80 scale-110 opacity-100 shadow-[0_0_20px_rgba(255,255,255,0.55)]");
       }
-      if (p === 1) return base + "bg-emerald-400 ring-2 ring-emerald-100/35 scale-100 opacity-100 shadow-[0_0_14px_rgba(52,211,153,0.45)]";
-      return base + "bg-amber-400 ring-2 ring-amber-100/35 scale-100 opacity-100 shadow-[0_0_14px_rgba(245,158,11,0.45)]";
+      if (p === 1) return base + "bg-stone-900 ring-2 ring-emerald-100/35 scale-100 opacity-100 shadow-[0_0_14px_rgba(52,211,153,0.45)]";
+      return base + "bg-stone-100 ring-2 ring-amber-100/35 scale-100 opacity-100 shadow-[0_0_14px_rgba(245,158,11,0.45)]";
     }
 
     function buildBoard() {
@@ -300,10 +309,10 @@
         var cell = document.createElement("button");
         cell.type = "button";
         cell.setAttribute("aria-label", "棋盘交叉点 " + String.fromCharCode(65 + c) + (r + 1));
-        cell.className = "group relative aspect-square bg-[#0c1a2e] transition-colors duration-150 hover:bg-[#152f4d] focus:outline-none focus-visible:ring-1 focus-visible:ring-emerald-300";
+        cell.className = "group relative aspect-square bg-[#c7a46b] transition-colors duration-150 hover:bg-[#d9b982] focus:outline-none focus-visible:ring-1 focus-visible:ring-emerald-300";
         if (STAR_POINTS.indexOf(r + "," + c) >= 0) {
           var dot = document.createElement("span");
-          dot.className = "pointer-events-none absolute left-1/2 top-1/2 h-[5px] w-[5px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#3a5b8a]";
+          dot.className = "pointer-events-none absolute left-1/2 top-1/2 h-[5px] w-[5px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#765a38]";
           cell.appendChild(dot);
         }
         var stone = document.createElement("span");
@@ -392,18 +401,18 @@
       var empty = document.getElementById("logEmpty");
       if (empty) empty.remove();
       var row = document.createElement("div");
-      row.className = "flex items-center justify-between rounded-xl border border-white/[0.06] bg-[#070c16] px-3.5 py-2.5";
+      row.className = "flex items-center justify-between rounded-xl border border-stone-300 bg-[#f3f0e8] px-3.5 py-2.5";
       var left = document.createElement("div");
       left.className = "flex items-center gap-3";
       var dot = document.createElement("span");
-      dot.className = p === 1 ? "h-3 w-3 rounded-full bg-emerald-400" : "h-3 w-3 rounded-full bg-amber-400";
+      dot.className = p === 1 ? "h-3 w-3 rounded-full bg-stone-900" : "h-3 w-3 rounded-full bg-stone-100";
       var label = document.createElement("span");
-      label.className = "font-mono text-[12.5px] text-slate-300";
-      label.textContent = "#" + no + "  " + (p === 1 ? "青方" : "金方") + "  " + String.fromCharCode(65 + c) + (r + 1);
+      label.className = "font-mono text-[12.5px] text-stone-800";
+      label.textContent = "#" + no + "  " + (p === 1 ? "黑方" : "白方") + "  " + String.fromCharCode(65 + c) + (r + 1);
       left.appendChild(dot);
       left.appendChild(label);
       var tag = document.createElement("span");
-      tag.className = "rounded-full bg-white/[0.06] px-2 py-0.5 text-[10.5px] text-slate-400";
+      tag.className = "rounded-full bg-stone-900/[0.06] px-2 py-0.5 text-[10.5px] text-stone-600";
       tag.textContent = "链下";
       row.appendChild(left);
       row.appendChild(tag);
@@ -422,7 +431,7 @@
       if (history.length === 0) {
         var p = document.createElement("p");
         p.id = "logEmpty";
-        p.className = "rounded-xl border border-dashed border-white/[0.12] px-4 py-6 text-center text-[12.5px] text-slate-500";
+        p.className = "rounded-xl border border-dashed border-white/[0.12] px-4 py-6 text-center text-[12.5px] text-stone-500";
         p.textContent = "尚未落子，点击棋盘开始对局";
         log.appendChild(p);
       }
@@ -445,17 +454,17 @@
       log.innerHTML = "";
       var p = document.createElement("p");
       p.id = "logEmpty";
-      p.className = "rounded-xl border border-dashed border-white/[0.12] px-4 py-6 text-center text-[12.5px] text-slate-500";
+      p.className = "rounded-xl border border-dashed border-white/[0.12] px-4 py-6 text-center text-[12.5px] text-stone-500";
       p.textContent = "尚未落子，点击棋盘开始对局";
       log.appendChild(p);
       var banner = document.getElementById("resultBanner");
       banner.classList.add("hidden");
       banner.classList.remove("flex");
       var link = document.getElementById("settleLink");
-      link.className = "pointer-events-none flex items-center justify-center gap-2 rounded-xl bg-emerald-500/35 px-4 py-3 text-sm font-semibold text-[#04140d] opacity-45 transition";
+      link.className = "pointer-events-none flex items-center justify-center gap-2 rounded-xl bg-stone-900/35 px-4 py-3 text-sm font-semibold text-[#f3ead8] opacity-45 transition";
       link.href = "settlement.html";
       document.getElementById("settleHint").textContent = "对局结束后可提交结算";
-      document.getElementById("pendingState").className = "rounded-full bg-white/[0.06] px-2.5 py-1 text-[10.5px] text-slate-300";
+      document.getElementById("pendingState").className = "rounded-full bg-stone-900/[0.06] px-2.5 py-1 text-[10.5px] text-stone-800";
       document.getElementById("pendingState").textContent = "对局中 · 未生成";
       updateDigest();
       refreshPanel();
@@ -475,7 +484,7 @@
       var title = document.getElementById("resultTitle");
       var desc = document.getElementById("resultDesc");
       if (winner === 1 || winner === 2) {
-        title.textContent = (winner === 1 ? "青方玩家" : "金方玩家") + " 五子连珠，赢得本局";
+        title.textContent = (winner === 1 ? "黑方玩家" : "白方玩家") + " 五子连珠，赢得本局";
         desc.textContent = "第 " + history.length + " 手落子形成五连，对局数据摘要已生成，可提交链上结算。";
       } else {
         title.textContent = "棋盘落满，本局平局";
@@ -485,12 +494,12 @@
       var link = document.getElementById("settleLink");
       var href = settleHref();
       link.href = href;
-      link.className = "flex items-center justify-center gap-2 rounded-xl bg-emerald-500 px-4 py-3 text-sm font-semibold text-[#04140d] shadow-[0_18px_40px_-20px_rgba(16,185,129,0.9)] transition hover:bg-emerald-400";
+      link.className = "flex items-center justify-center gap-2 rounded-xl bg-stone-900 px-4 py-3 text-sm font-semibold text-[#f3ead8] shadow-[0_18px_40px_-20px_rgba(16,185,129,0.9)] transition hover:bg-stone-900";
       document.getElementById("settleLinkTop").href = href;
       document.getElementById("settleHint").textContent = "本局仅产生 1 笔链上结算存证";
 
       var pending = document.getElementById("pendingState");
-      pending.className = "rounded-full bg-emerald-500/15 px-2.5 py-1 text-[10.5px] text-emerald-300 ring-1 ring-emerald-400/25";
+      pending.className = "rounded-full bg-stone-900/15 px-2.5 py-1 text-[10.5px] text-stone-700 ring-1 ring-stone-500/25";
       pending.textContent = "已生成 · 待上链";
 
       refreshPanel();
@@ -570,13 +579,13 @@
       var name = document.getElementById("turnName");
       if (gameOver) {
         dot.className = "h-3.5 w-3.5 rounded-full bg-slate-500";
-        name.textContent = winner === 0 ? "对局结束 · 平局" : "对局结束 · " + (winner === 1 ? "青方胜" : "金方胜");
+        name.textContent = winner === 0 ? "对局结束 · 平局" : "对局结束 · " + (winner === 1 ? "黑方胜" : "白方胜");
       } else if (current === 1) {
-        dot.className = "h-3.5 w-3.5 rounded-full bg-emerald-400 shadow-[0_0_10px_rgba(52,211,153,0.7)]";
-        name.textContent = "青方玩家";
+        dot.className = "h-3.5 w-3.5 rounded-full bg-stone-900 shadow-[0_0_10px_rgba(52,211,153,0.7)]";
+        name.textContent = "黑方玩家";
       } else {
-        dot.className = "h-3.5 w-3.5 rounded-full bg-amber-400 shadow-[0_0_10px_rgba(245,158,11,0.7)]";
-        name.textContent = "金方玩家";
+        dot.className = "h-3.5 w-3.5 rounded-full bg-stone-100 shadow-[0_0_10px_rgba(245,158,11,0.7)]";
+        name.textContent = "白方玩家";
       }
 
       document.getElementById("undoBtn").disabled = gameOver || history.length === 0;
@@ -619,58 +628,58 @@
 <div aria-labelledby="gameRulesTitle" aria-modal="true" class="fixed inset-0 z-[100] hidden" id="gameRulesModal" role="dialog">
   <div class="absolute inset-0 bg-black/70 backdrop-blur-sm" data-close-rules="1"></div>
   <div class="relative mx-auto flex min-h-screen max-w-[760px] items-center justify-center px-4 py-8">
-    <section class="relative max-h-[88vh] w-full overflow-hidden rounded-3xl border border-white/[0.10] bg-[#0b1424] shadow-2xl shadow-black/50 ring-1 ring-emerald-400/10">
-      <div class="flex items-center justify-between border-b border-white/[0.08] px-6 py-5">
+    <section class="relative max-h-[88vh] w-full overflow-hidden rounded-3xl border border-stone-300 bg-[#fbfaf7] shadow-2xl shadow-black/50 ring-1 ring-stone-500/10">
+      <div class="flex items-center justify-between border-b border-stone-300 px-6 py-5">
         <div>
-          <div class="flex items-center gap-2 text-emerald-300">
+          <div class="flex items-center gap-2 text-stone-700">
             <iconify-icon class="text-lg" icon="tabler:book-2"></iconify-icon>
             <span class="text-xs font-medium tracking-wide">GAME RULES</span>
           </div>
-          <h2 class="mt-1 text-xl font-semibold text-white" id="gameRulesTitle">游戏规则</h2>
+          <h2 class="mt-1 text-xl font-semibold text-stone-900" id="gameRulesTitle">游戏规则</h2>
         </div>
-        <button aria-label="关闭游戏规则" class="grid h-9 w-9 place-items-center rounded-xl text-slate-400 transition hover:bg-white/[0.06] hover:text-white" data-close-rules="1" type="button">
+        <button aria-label="关闭游戏规则" class="grid h-9 w-9 place-items-center rounded-xl text-stone-600 transition hover:bg-stone-900/[0.06] hover:text-stone-900" data-close-rules="1" type="button">
           <iconify-icon class="text-lg" icon="tabler:x"></iconify-icon>
         </button>
       </div>
       <div class="max-h-[calc(88vh-82px)] overflow-y-auto px-6 py-6">
         <div class="grid gap-4 md:grid-cols-2">
-          <div class="rounded-2xl border border-white/[0.08] bg-white/[0.025] p-5">
+          <div class="rounded-2xl border border-stone-300 bg-white/[0.025] p-5">
             <div class="flex items-center gap-3">
-              <span class="grid h-9 w-9 place-items-center rounded-xl bg-emerald-500/10 text-emerald-300 ring-1 ring-emerald-400/20"><iconify-icon icon="tabler:click"></iconify-icon></span>
-              <h3 class="font-semibold text-white">五子棋下法</h3>
+              <span class="grid h-9 w-9 place-items-center rounded-xl bg-stone-900/10 text-stone-700 ring-1 ring-stone-500/20"><iconify-icon icon="tabler:click"></iconify-icon></span>
+              <h3 class="font-semibold text-stone-900">五子棋下法</h3>
             </div>
-            <ol class="mt-4 space-y-3 text-[13px] leading-relaxed text-slate-300">
-              <li><span class="mr-2 font-mono text-emerald-300">01</span>双方在线匹配后进入同一盘对局，青方先手，金方后手。</li>
-              <li><span class="mr-2 font-mono text-emerald-300">02</span>轮到自己时，点击棋盘交叉点落子；每次落子占用 1 手。</li>
-              <li><span class="mr-2 font-mono text-emerald-300">03</span>棋子落下后不能移动；双方依次落子，直到产生胜负或和棋。</li>
-              <li><span class="mr-2 font-mono text-emerald-300">04</span>任意一方横、竖或斜向连续形成 5 子，即刻获胜，对局结束。</li>
-              <li><span class="mr-2 font-mono text-emerald-300">05</span>棋盘全部落满仍没有五连，则判定为平局。</li>
+            <ol class="mt-4 space-y-3 text-[13px] leading-relaxed text-stone-800">
+              <li><span class="mr-2 font-mono text-stone-700">01</span>双方在线匹配后进入同一盘对局，黑方先手，白方后手。</li>
+              <li><span class="mr-2 font-mono text-stone-700">02</span>轮到自己时，点击棋盘交叉点落子；每次落子占用 1 手。</li>
+              <li><span class="mr-2 font-mono text-stone-700">03</span>棋子落下后不能移动；双方依次落子，直到产生胜负或和棋。</li>
+              <li><span class="mr-2 font-mono text-stone-700">04</span>任意一方横、竖或斜向连续形成 5 子，即刻获胜，对局结束。</li>
+              <li><span class="mr-2 font-mono text-stone-700">05</span>棋盘全部落满仍没有五连，则判定为平局。</li>
             </ol>
           </div>
-          <div class="rounded-2xl border border-white/[0.08] bg-white/[0.025] p-5">
+          <div class="rounded-2xl border border-stone-300 bg-white/[0.025] p-5">
             <div class="flex items-center gap-3">
-              <span class="grid h-9 w-9 place-items-center rounded-xl bg-amber-500/10 text-amber-300 ring-1 ring-amber-400/20"><iconify-icon icon="tabler:coins"></iconify-icon></span>
-              <h3 class="font-semibold text-white">分数结算</h3>
+              <span class="grid h-9 w-9 place-items-center rounded-xl bg-amber-500/10 text-stone-700 ring-1 ring-stone-400/20"><iconify-icon icon="tabler:coins"></iconify-icon></span>
+              <h3 class="font-semibold text-stone-900">分数结算</h3>
             </div>
             <div class="mt-4 space-y-3 text-[13px] leading-relaxed">
-              <div class="flex items-center justify-between rounded-xl bg-white/[0.03] px-4 py-3"><span class="text-slate-300">胜方</span><span class="font-mono font-semibold text-emerald-300">+100 基础分</span></div>
-              <div class="flex items-center justify-between rounded-xl bg-white/[0.03] px-4 py-3"><span class="text-slate-300">手数效率</span><span class="font-mono font-semibold text-amber-300">+5 ～ +30</span></div>
-              <div class="flex items-center justify-between rounded-xl bg-white/[0.03] px-4 py-3"><span class="text-slate-300">负方</span><span class="font-mono font-semibold text-rose-300">-40</span></div>
-              <div class="flex items-center justify-between rounded-xl bg-white/[0.03] px-4 py-3"><span class="text-slate-300">平局双方</span><span class="font-mono font-semibold text-sky-300">各 +20</span></div>
+              <div class="flex items-center justify-between rounded-xl bg-stone-900/[0.04] px-4 py-3"><span class="text-stone-800">胜方</span><span class="font-mono font-semibold text-stone-700">+100 基础分</span></div>
+              <div class="flex items-center justify-between rounded-xl bg-stone-900/[0.04] px-4 py-3"><span class="text-stone-800">手数效率</span><span class="font-mono font-semibold text-stone-700">+5 ～ +30</span></div>
+              <div class="flex items-center justify-between rounded-xl bg-stone-900/[0.04] px-4 py-3"><span class="text-stone-800">负方</span><span class="font-mono font-semibold text-stone-700">-40</span></div>
+              <div class="flex items-center justify-between rounded-xl bg-stone-900/[0.04] px-4 py-3"><span class="text-stone-800">平局双方</span><span class="font-mono font-semibold text-sky-300">各 +20</span></div>
             </div>
-            <p class="mt-4 text-[12px] leading-relaxed text-slate-500">胜方总得分 = 100 基础分 + 手数效率加成。现有原型采用 +5～+30 的效率加成区间，手数越少，加成越高。</p>
+            <p class="mt-4 text-[12px] leading-relaxed text-stone-500">胜方总得分 = 100 基础分 + 手数效率加成。现有原型采用 +5～+30 的效率加成区间，手数越少，加成越高。</p>
           </div>
         </div>
-        <div class="mt-4 rounded-2xl border border-emerald-400/15 bg-emerald-500/[0.06] p-5">
+        <div class="mt-4 rounded-2xl border border-stone-500/15 bg-stone-900/[0.06] p-5">
           <div class="flex items-start gap-3">
-            <iconify-icon class="mt-0.5 text-lg text-emerald-300" icon="tabler:shield-check"></iconify-icon>
+            <iconify-icon class="mt-0.5 text-lg text-stone-700" icon="tabler:shield-check"></iconify-icon>
             <div>
-              <h3 class="font-semibold text-white">结算与链上存证</h3>
-              <p class="mt-1 text-[12.5px] leading-relaxed text-slate-400">对局在链下完成。终局后按上述规则计算双方积分，并生成本局结果摘要；每局只提交 1 笔链上结算存证，记录终局摘要、双方地址与积分结果。</p>
+              <h3 class="font-semibold text-stone-900">结算与链上存证</h3>
+              <p class="mt-1 text-[12.5px] leading-relaxed text-stone-600">对局在链下完成。终局后按上述规则计算双方积分，并生成本局结果摘要；每局只提交 1 笔链上结算存证，记录终局摘要、双方地址与积分结果。</p>
             </div>
           </div>
         </div>
-        <p class="mt-4 text-center text-[11px] text-slate-500">提示：游戏规则可在对局过程中随时打开查看，不会离开当前对局页面。</p>
+        <p class="mt-4 text-center text-[11px] text-stone-500">提示：游戏规则可在对局过程中随时打开查看，不会离开当前对局页面。</p>
       </div>
     </section>
   </div>
